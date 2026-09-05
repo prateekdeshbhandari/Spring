@@ -1,9 +1,14 @@
 package com.xwork.hosts;
 
+import com.xwork.hosts.config.DatabaseConfiguretion;
+import com.xwork.hosts.config.SpringConfugertion;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-public class HostDate extends AbstractAnnotationConfigDispatcherServletInitializer {
+public  class HostDate extends AbstractAnnotationConfigDispatcherServletInitializer {
+public HostDate(){
 
+    System.out.println("Created HostDate...");
+}
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
@@ -12,7 +17,7 @@ public class HostDate extends AbstractAnnotationConfigDispatcherServletInitializ
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[0];
+        return new Class[]{SpringConfugertion.class, DatabaseConfiguretion.class};
     }
 
     @Override
