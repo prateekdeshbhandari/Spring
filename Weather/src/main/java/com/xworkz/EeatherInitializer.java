@@ -1,6 +1,7 @@
 package com.xworkz;
 
 import com.xworkz.config.Weatherconfig;
+import com.xworkz.config.WebConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class EeatherInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -11,7 +12,7 @@ public class EeatherInitializer extends AbstractAnnotationConfigDispatcherServle
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class[]{Weatherconfig.class, Weatherconfig.class};
+        return new Class[]{Weatherconfig.class, WebConfig.class};
     }
 
     @Override
