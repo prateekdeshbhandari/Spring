@@ -9,7 +9,7 @@ public class ApplicationInitializer extends AbstractAnnotationConfigDispatcherSe
     }
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{RootConfig.class, WebConfig.class};
+        return new Class[]{RootConfig.class, WebConfig.class    };
     }
 
     @Override
