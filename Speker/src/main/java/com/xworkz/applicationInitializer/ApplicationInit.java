@@ -17,6 +17,6 @@ public class ApplicationInit extends AbstractAnnotationConfigDispatcherServletIn
 
     @Override
     protected String[] getServletMappings() {
-        return new String[]{"/click","/team","/product","/place","/contact","/movie","/telephone"};
+        return new String[]{"/click","/team","/product","/place","/contact","/movie","/telephone","/camera","/mobile","/temple"};
     }
 }

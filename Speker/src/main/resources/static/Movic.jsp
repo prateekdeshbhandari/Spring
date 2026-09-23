@@ -2,32 +2,87 @@
 <html>
 <head>
     <title>Movie Registration</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
 </head>
-<body>
 
-<h2>Movie Registration</h2>
+<body class="bg-light">
 
-<form action="movie" method="post">
+<div class="container mt-5">
 
-    Movie ID:
-    <input type="number" name="movieId" required>
-    <br><br>
+    <div class="row justify-content-center">
 
-    Movie Name:
-    <input type="text" name="movieName" required>
-    <br><br>
+        <div class="col-md-6">
 
-    Hero:
-    <input type="text" name="hero" required>
-    <br><br>
+            <div class="card shadow">
 
-    Director:
-    <input type="text" name="director" required>
-    <br><br>
+                <div class="card-header bg-primary text-white text-center">
+                    <h3 class="mb-0">Movie Registration</h3>
+                </div>
 
-    <input type="submit" value="Submit">
+                <div class="card-body">
 
-</form>
+                    <form action="movie" method="post">
+
+                        <!-- Movie ID -->
+                        <div class="mb-3">
+                            <label class="form-label">Movie ID</label>
+                            <input type="number"
+                                   name="movieId"
+                                   class="form-control"
+                                   placeholder="Enter Movie ID"
+                                   required>
+                        </div>
+
+                        <!-- Movie Name -->
+                        <div class="mb-3">
+                            <label class="form-label">Movie Name</label>
+                            <input type="text"
+                                   name="movieName"
+                                   class="form-control"
+                                   placeholder="Enter Movie Name"
+                                   required>
+                        </div>
+
+                        <!-- Hero -->
+                        <div class="mb-3">
+                            <label class="form-label">Hero</label>
+                            <input type="text"
+                                   name="hero"
+                                   class="form-control"
+                                   placeholder="Enter Hero Name"
+                                   required>
+                        </div>
+
+                        <!-- Director -->
+                        <div class="mb-3">
+                            <label class="form-label">Director</label>
+                            <input type="text"
+                                   name="director"
+                                   class="form-control"
+                                   placeholder="Enter Director Name"
+                                   required>
+                        </div>
+
+                        <!-- Submit -->
+                        <div class="d-grid">
+                            <input type="submit"
+                                   value="Submit"
+                                   class="btn btn-primary">
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 </body>
 </html>
