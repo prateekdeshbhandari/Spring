@@ -6,7 +6,10 @@ import com.xworkz.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/")
@@ -48,77 +51,132 @@ public class TestComponent {
     }
 
     @RequestMapping("/team")
-    public String Cricket(CricketTeamDTo dto, Model model){
+    public String Cricket(@Valid CricketTeamDTo dto, Model model, BindingResult bindingResult){
         System.out.println("running the team method");
-        System.out.println("Received DTO: "+dto);
-        this.cricketTeam.validetionAndSavd(dto);
-model.addAttribute("sucssess","Team registered successfully!");
+        System.out.println("Received DTO: " + dto);
+        if(bindingResult.hasErrors()) {
+            System.out.println("no validection error"+bindingResult.getFieldErrorCount());
+           cricketTeam.validetionAndSavd(dto);
+
+
+        }else {
+            cricketTeam.validetionAndSavd(dto);
+            model.addAttribute("sucssess", "Team registered successfully!");
+        }
         return "/Cricket.jsp";
     }
     @RequestMapping("/product")
-    public String product(ProductDTO dto ,Model model){
-        System.out.println("running the product method");
-        System.out.println("Received DTO: "+dto);
-        this.productService.validectionAndSved(dto);
+    public String product(@Valid ProductDTO dto ,Model model,BindingResult bindingResult){
 
-        model.addAttribute("sucssess","Product registered successfully!");
+        System.out.println("running the product method");
+        System.out.println("Received DTO: " + dto);
+        if (bindingResult.hasErrors()) {
+
+
+           productService.validectionAndSved(dto);
+
+
+        }else {
+            productService.validectionAndSved(dto);
+            model.addAttribute("sucssess", "Product registered successfully!");
+
+        }
         return "/Product.jsp";
     }
     @RequestMapping("/place")
-    public String place(PlaceDTO dto , Model model){
+    public String place(@Valid PlaceDTO dto , Model model,BindingResult bindingResult){
         System.out.println("running the place method");
-        System.out.println("Received DTO: "+dto);
-        this.placeService.vaalidetionAndSave(dto);
-        model.addAttribute("sucssess","Place registered successfully!");
+        System.out.println("Received DTO: " + dto);
+        if(bindingResult.hasErrors()) {
+
+
+
+           placeService.vaalidetionAndSave(dto);
+            model.addAttribute("sucssess", "Place registered successfully!");
+        }else {
+            model.addAttribute("error", "Validation failed. Please check the form.");
+        }
         return "/Place.jsp";
     }
     @RequestMapping("/contact")
-    public String contact(ContactDTO dto , Model model){
+    public String contact(@Valid ContactDTO dto , Model model,BindingResult bindingResult){
         System.out.println("running the contact method");
-        System.out.println("Received DTO: "+dto);
-        this.contactService.validetionAndSavd( dto);
-        model.addAttribute("sucssess","Contact registered successfully!");
+        System.out.println("Received DTO: " + dto);
+        if(bindingResult.hasErrors()) {
+
+            this.contactService.validetionAndSavd(dto);
+            model.addAttribute("sucssess", "Contact registered successfully!");
+        }else {
+            model.addAttribute("error", "Validation failed. Please check the form.");
+        }
         return "/Contect.jsp";
     }
     @RequestMapping("/movie")
-    public String movie(MovieDTO dto , Model model){
+    public String movie(@Valid MovieDTO dto , Model model,BindingResult bindingResult){
         System.out.println("running the movie method");
         System.out.println("Received DTO: "+dto);
-        this.movieService.validetionAndSave(dto);
+        if (bindingResult.hasErrors()){
+
+      movieService.validetionAndSave(dto);
         model.addAttribute("sucssess","Movie registered successfully!");
+        }else {
+            model.addAttribute("error", "Validation failed. Please check the form.");
+        }
         return "/Movic.jsp";
     }
     @RequestMapping("/telephone")
-    public String telephone(TelephoneOperatorDTO dto , Model model){
+    public String telephone(@Valid TelephoneOperatorDTO dto , Model model,BindingResult bindingResult){
         System.out.println("running the telephone method");
-        System.out.println("Received DTO: "+dto);
-        this.telephoneOperatorService.validetionAndSave(dto);
-        model.addAttribute("sucssess","Telephone registered successfully!");
+        System.out.println("Received DTO: " + dto);
+        if(bindingResult.hasErrors()) {
+
+            telephoneOperatorService.validetionAndSave(dto);
+            model.addAttribute("sucssess", "Telephone registered successfully!");
+        }
+        else {
+            model.addAttribute("error", "Validation failed. Please check the form.");
+        }
         return "/Telephone.jsp";
     }
     @RequestMapping("/camera")
-    public String camera(CameraDTO dto , Model model){
+    public String camera(@Valid CameraDTO dto , Model model,BindingResult bindingResult){
         System.out.println("running the camera method");
         System.out.println("Received DTO: "+dto);
-        this.cameraService.validetionAndSave(dto);
+        if(bindingResult.hasErrors()){
+
+       cameraService.validetionAndSave(dto);
 
         model.addAttribute("sucssess","Camera registered successfully!");
+        }
+        else {
+            model.addAttribute("error", "Validation failed. Please check the form.");
+        }
         return "/Camera.jsp";
     }
     @RequestMapping("/mobile")
-    public String mobile(MobileDTO dto , Model model){
+    public String mobile(@Valid MobileDTO dto , Model model,BindingResult bindingResult){
         System.out.println("running the mobile method");
-        System.out.println("Received DTO: "+dto);
-        this.mobileService.validetionAndSave(dto);
-        model.addAttribute("sucssess","Mobile registered successfully!");
+        System.out.println("Received DTO: " + dto);
+        if(bindingResult.hasErrors()) {
+
+           mobileService.validetionAndSave(dto);
+            model.addAttribute("sucssess", "Mobile registered successfully!");
+        }else {
+            model.addAttribute("error", "Validation failed. Please check the form.");
+        }
         return "/Mobile.jsp";
     }
     @RequestMapping("/temple")
-    public String temple(TempleDTO dto , Model model){
+    public String temple(@Valid TempleDTO dto , Model model,BindingResult bindingResult){
         System.out.println("running the temple method");
-        System.out.println("Received DTO: "+dto);
-        this.templeService.validetionAndSave(dto);
-        model.addAttribute("sucssess","Temple registered successfully!");
+        System.out.println("Received DTO: " + dto);
+        if(bindingResult.hasErrors()) {
+
+           templeService.validetionAndSave(dto);
+            model.addAttribute("sucssess", "Temple registered successfully!");
+        }else {
+            model.addAttribute("error", "Validation failed. Please check the form.");
+        }
         return "/Temple.jsp";
     }
 

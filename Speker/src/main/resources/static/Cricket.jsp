@@ -78,6 +78,7 @@
                     <!-- Success Message -->
                     <div class="text-success text-center mt-3">
                         ${sucssess}
+                        ${error}
                     </div>
 
                 </div>
