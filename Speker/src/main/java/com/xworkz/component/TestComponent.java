@@ -67,7 +67,7 @@ public class TestComponent {
             model.addAttribute("errors", error);
 
             model.addAttribute("cricketdto"+dto);
-            model.addAttribute("sucssess", "Team registered successfully!");
+          model.addAttribute("error", "Team registration failed. Please check the form.");
         }
         return "/Cricket.jsp";
     }
@@ -83,7 +83,7 @@ public class TestComponent {
             List<ObjectError> error = bindingResult.getAllErrors();
 model.addAttribute("errors", error);
 
-model.addAttribute("cricketdto"+dto);
+model.addAttribute("productdto"+dto);
         }else {
             System.out.println("validet dtat succsesfull");
             model.addAttribute("sucssess", "Product registered successfully!");
@@ -101,10 +101,16 @@ model.addAttribute("cricketdto"+dto);
             System.out.println("vaklide  error plize pix: ");
            placeService.vaalidetionAndSave(dto);
             model.addAttribute("error", "Validation failed. Please check the form.");
+            List<ObjectError> error = bindingResult.getAllErrors();
+            model.addAttribute("errors", error);
 
+            model.addAttribute("placedto"+dto);
+            System.out.println("PlaceDTO: " + bindingResult.getAllErrors());
         }else {
             System.out.println("validet dtos data");
+
             model.addAttribute("sucssess", "Place registered successfully!");
+
         }
         return "/Place.jsp";
     }
@@ -116,9 +122,13 @@ model.addAttribute("cricketdto"+dto);
             System.out.println("vaid  dtos data");
             contactService.validetionAndSavd(dto);
             model.addAttribute("sucssess", "Contact registered successfully!");
+
         }else {
             System.out.println("validet data error plize fix it: ");
             model.addAttribute("error", "Validation failed. Please check the form.");
+            List<ObjectError> error = bindingResult.getAllErrors();
+            model.addAttribute("errors", error);
+            model.addAttribute("contactdto"+dto);
         }
         return "/Contect.jsp";
     }
@@ -148,6 +158,9 @@ model.addAttribute("cricketdto"+dto);
         else {
             System.out.println("invalid data: ");
             model.addAttribute("error", "Validation failed. Please check the form.");
+            List<ObjectError> error = bindingResult.getAllErrors();
+            model.addAttribute("errors", error);
+            model.addAttribute("telephonedto"+dto);
         }
         return "/Telephone.jsp";
     }
@@ -164,6 +177,9 @@ model.addAttribute("cricketdto"+dto);
         else {
             System.out.println("invalid data: ");
             model.addAttribute("error", "Validation failed. Please check the form.");
+            List<ObjectError> error = bindingResult.getAllErrors();
+            model.addAttribute("errors", error);
+            model.addAttribute("cameradto"+dto);
         }
         return "/Camera.jsp";
     }
@@ -178,6 +194,9 @@ model.addAttribute("cricketdto"+dto);
         }else {
             System.out.println("invalid data: ");
             model.addAttribute("error", "Validation failed. Please check the form.");
+            List<ObjectError> error = bindingResult.getAllErrors();
+            model.addAttribute("errors", error);
+            model.addAttribute("mobile dto"+dto);
         }
         return "/Mobile.jsp";
     }
@@ -192,6 +211,9 @@ model.addAttribute("cricketdto"+dto);
         }else {
             System.out.println("invalid data: ");
             model.addAttribute("error", "Validation failed. Please check the form.");
+            List<ObjectError> error = bindingResult.getAllErrors();
+            model.addAttribute("errors", error);
+            model.addAttribute("templ dto"+dto);
         }
         return "/Temple.jsp";
     }

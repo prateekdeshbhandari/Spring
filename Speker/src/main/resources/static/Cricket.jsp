@@ -34,6 +34,7 @@
                             <input type="number"
                                    name="teamId"
                                    class="form-control"
+                                   value="${dto.teamId}"
                                    placeholder="Enter Team ID"
                                    required>
                         </div>
@@ -44,6 +45,7 @@
                             <input type="text"
                                    name="teamName"
                                    class="form-control"
+                                   value="${dto.teamName}"
                                    placeholder="Enter Team Name"
                                    required>
                         </div>
@@ -54,6 +56,7 @@
                             <input type="text"
                                    name="captain"
                                    class="form-control"
+                                   value="${dto.captain}"
                                    placeholder="Enter Captain Name"
                                    required>
                         </div>
@@ -64,6 +67,7 @@
                             <input type="text"
                                    name="coach"
                                    class="form-control"
+                                   value="${dto.coach}"
                                    placeholder="Enter Coach Name"
                                    required>
                         </div>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Movie Registration</title>
@@ -83,6 +83,10 @@
     </div>
 
 </div>
-
+${sucssess}
+${errors}
+<c:forEach items="${errors}" var="error">
+    <div class="alert alert-danger">${error.defaultMessage}</div>
+</c:forEach>
 </body>
 </html>
