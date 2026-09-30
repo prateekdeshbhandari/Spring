@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Product Registration</title>
@@ -79,6 +79,10 @@
                     <!-- Success Message -->
                     <div class="text-success text-center mt-3">
                         ${sucssess}
+                        ${errors}
+                        <c:forEach items="${errors}" var="error">
+                            <div class="alert alert-danger">${error.defaultMessage}</div>
+                        </c:forEach>
                     </div>
 
                 </div>

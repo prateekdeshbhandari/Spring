@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -51,130 +53,144 @@ public class TestComponent {
     }
 
     @RequestMapping("/team")
-    public String Cricket(@Valid CricketTeamDTo dto, Model model, BindingResult bindingResult){
+    public String Cricket(Model model ,@Valid CricketTeamDTo dto, BindingResult bindingResult){
         System.out.println("running the team method");
         System.out.println("Received DTO: " + dto);
-        if(bindingResult.hasErrors()) {
-            System.out.println("no validection error"+bindingResult.getFieldErrorCount());
+        if(!bindingResult.hasErrors()) {
+            System.out.println("no validection error");
            cricketTeam.validetionAndSavd(dto);
-
+            model.addAttribute("sucssess", "Team registered successfully!");
 
         }else {
-            cricketTeam.validetionAndSavd(dto);
+            System.out.println("valid error pliz fix it");
+            List<ObjectError> error = bindingResult.getAllErrors();
+            model.addAttribute("errors", error);
+
+            model.addAttribute("cricketdto"+dto);
             model.addAttribute("sucssess", "Team registered successfully!");
         }
         return "/Cricket.jsp";
     }
     @RequestMapping("/product")
-    public String product(@Valid ProductDTO dto ,Model model,BindingResult bindingResult){
+    public String product(Model model,@Valid ProductDTO dto ,BindingResult bindingResult){
 
         System.out.println("running the product method");
         System.out.println("Received DTO: " + dto);
         if (bindingResult.hasErrors()) {
 
-
+            System.out.println("validet error plize fix it: ");
            productService.validectionAndSved(dto);
+            List<ObjectError> error = bindingResult.getAllErrors();
+model.addAttribute("errors", error);
 
-
+model.addAttribute("cricketdto"+dto);
         }else {
-            productService.validectionAndSved(dto);
+            System.out.println("validet dtat succsesfull");
             model.addAttribute("sucssess", "Product registered successfully!");
 
         }
         return "/Product.jsp";
     }
     @RequestMapping("/place")
-    public String place(@Valid PlaceDTO dto , Model model,BindingResult bindingResult){
+    public String place(Model model,@Valid PlaceDTO dto , BindingResult bindingResult){
         System.out.println("running the place method");
         System.out.println("Received DTO: " + dto);
         if(bindingResult.hasErrors()) {
 
 
-
+            System.out.println("vaklide  error plize pix: ");
            placeService.vaalidetionAndSave(dto);
-            model.addAttribute("sucssess", "Place registered successfully!");
-        }else {
             model.addAttribute("error", "Validation failed. Please check the form.");
+
+        }else {
+            System.out.println("validet dtos data");
+            model.addAttribute("sucssess", "Place registered successfully!");
         }
         return "/Place.jsp";
     }
     @RequestMapping("/contact")
-    public String contact(@Valid ContactDTO dto , Model model,BindingResult bindingResult){
+    public String contact(Model model,@Valid ContactDTO dto , BindingResult bindingResult){
         System.out.println("running the contact method");
         System.out.println("Received DTO: " + dto);
-        if(bindingResult.hasErrors()) {
-
-            this.contactService.validetionAndSavd(dto);
+        if(!bindingResult.hasErrors()) {
+            System.out.println("vaid  dtos data");
+            contactService.validetionAndSavd(dto);
             model.addAttribute("sucssess", "Contact registered successfully!");
         }else {
+            System.out.println("validet data error plize fix it: ");
             model.addAttribute("error", "Validation failed. Please check the form.");
         }
         return "/Contect.jsp";
     }
     @RequestMapping("/movie")
-    public String movie(@Valid MovieDTO dto , Model model,BindingResult bindingResult){
+    public String movie(Model model,@Valid MovieDTO dto , BindingResult bindingResult){
         System.out.println("running the movie method");
         System.out.println("Received DTO: "+dto);
-        if (bindingResult.hasErrors()){
-
+        if (!bindingResult.hasErrors()){
+            System.out.println("dtat valide: ");
       movieService.validetionAndSave(dto);
         model.addAttribute("sucssess","Movie registered successfully!");
         }else {
+            System.out.println("dtat invalide: ");
             model.addAttribute("error", "Validation failed. Please check the form.");
         }
         return "/Movic.jsp";
     }
     @RequestMapping("/telephone")
-    public String telephone(@Valid TelephoneOperatorDTO dto , Model model,BindingResult bindingResult){
+    public String telephone( Model model,@Valid TelephoneOperatorDTO dto ,BindingResult bindingResult){
         System.out.println("running the telephone method");
         System.out.println("Received DTO: " + dto);
-        if(bindingResult.hasErrors()) {
-
+        if(!bindingResult.hasErrors()) {
+            System.out.println("valid data: ");
             telephoneOperatorService.validetionAndSave(dto);
             model.addAttribute("sucssess", "Telephone registered successfully!");
         }
         else {
+            System.out.println("invalid data: ");
             model.addAttribute("error", "Validation failed. Please check the form.");
         }
         return "/Telephone.jsp";
     }
     @RequestMapping("/camera")
-    public String camera(@Valid CameraDTO dto , Model model,BindingResult bindingResult){
+    public String camera(Model model,@Valid CameraDTO dto , BindingResult bindingResult){
         System.out.println("running the camera method");
         System.out.println("Received DTO: "+dto);
-        if(bindingResult.hasErrors()){
-
+        if(!bindingResult.hasErrors()){
+            System.out.println("valid data: ");
        cameraService.validetionAndSave(dto);
 
         model.addAttribute("sucssess","Camera registered successfully!");
         }
         else {
+            System.out.println("invalid data: ");
             model.addAttribute("error", "Validation failed. Please check the form.");
         }
         return "/Camera.jsp";
     }
     @RequestMapping("/mobile")
-    public String mobile(@Valid MobileDTO dto , Model model,BindingResult bindingResult){
+    public String mobile( Model model,@Valid MobileDTO dto ,BindingResult bindingResult){
         System.out.println("running the mobile method");
         System.out.println("Received DTO: " + dto);
-        if(bindingResult.hasErrors()) {
-
+        if(!bindingResult.hasErrors()) {
+            System.out.println("valid data: ");
            mobileService.validetionAndSave(dto);
             model.addAttribute("sucssess", "Mobile registered successfully!");
         }else {
+            System.out.println("invalid data: ");
             model.addAttribute("error", "Validation failed. Please check the form.");
         }
         return "/Mobile.jsp";
     }
     @RequestMapping("/temple")
-    public String temple(@Valid TempleDTO dto , Model model,BindingResult bindingResult){
+    public String temple(Model model,@Valid TempleDTO dto , BindingResult bindingResult){
         System.out.println("running the temple method");
         System.out.println("Received DTO: " + dto);
-        if(bindingResult.hasErrors()) {
-
+        if(!bindingResult.hasErrors()) {
+            System.out.println("valid dtat: ");
            templeService.validetionAndSave(dto);
             model.addAttribute("sucssess", "Temple registered successfully!");
         }else {
+            System.out.println("invalid data: ");
             model.addAttribute("error", "Validation failed. Please check the form.");
         }
         return "/Temple.jsp";
