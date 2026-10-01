@@ -32,6 +32,7 @@
                             <input type="number"
                                    name="movieId"
                                    class="form-control"
+                                   value="${dto.movieId}"
                                    placeholder="Enter Movie ID"
                                    required>
                         </div>
@@ -42,6 +43,7 @@
                             <input type="text"
                                    name="movieName"
                                    class="form-control"
+                                   value="${dto.movieName}"
                                    placeholder="Enter Movie Name"
                                    required>
                         </div>
@@ -52,6 +54,7 @@
                             <input type="text"
                                    name="hero"
                                    class="form-control"
+                                   value="${dto.hero}"
                                    placeholder="Enter Hero Name"
                                    required>
                         </div>
@@ -62,6 +65,7 @@
                             <input type="text"
                                    name="director"
                                    class="form-control"
+                                   value="${dto.director}"
                                    placeholder="Enter Director Name"
                                    required>
                         </div>

@@ -32,6 +32,7 @@
                             <input type="number"
                                    name="contactId"
                                    class="form-control"
+                                   value="${dto.contactId}"
                                    placeholder="Enter Contact ID"
                                    required>
                         </div>
@@ -42,6 +43,7 @@
                             <input type="text"
                                    name="name"
                                    class="form-control"
+                                   value="${dto.name}"
                                    placeholder="Enter Name"
                                    required>
                         </div>
@@ -52,6 +54,7 @@
                             <input type="email"
                                    name="email"
                                    class="form-control"
+                                   value="${dto.email}"
                                    placeholder="Enter Email"
                                    required>
                         </div>
@@ -62,6 +65,7 @@
                             <input type="tel"
                                    name="mobile"
                                    class="form-control"
+                                   value="${dto.mobile}"
                                    placeholder="Enter Mobile Number"
                                    required>
                         </div>

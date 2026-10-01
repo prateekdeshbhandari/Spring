@@ -32,6 +32,7 @@
                             <input type="number"
                                    name="productId"
                                    class="form-control"
+                                   value="${dto.productId}"
                                    placeholder="Enter Product ID"
                                    required>
                         </div>
@@ -42,6 +43,7 @@
                             <input type="text"
                                    name="productName"
                                    class="form-control"
+                                   value="${dto.productName}"
                                    placeholder="Enter Product Name"
                                    required>
                         </div>
@@ -52,6 +54,7 @@
                             <input type="number"
                                    name="price"
                                    class="form-control"
+                                   value="${dto.price}"
                                    placeholder="Enter Price"
                                    step="0.01"
                                    required>
@@ -63,6 +66,7 @@
                             <input type="text"
                                    name="category"
                                    class="form-control"
+                                   value="${dto.category}"
                                    placeholder="Enter Category"
                                    required>
                         </div>

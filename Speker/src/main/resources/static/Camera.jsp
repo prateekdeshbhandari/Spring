@@ -24,26 +24,26 @@
 
                 <div class="mb-3">
                     <label class="form-label">Camera ID</label>
-                    <input type="number" name="cameraId"
+                    <input type="number" name="cameraId" value="${dto.cameraId}"
                            class="form-control" required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Camera Name</label>
-                    <input type="text" name="cameraName"
+                    <input type="text" name="cameraName"value="${dto.cameraName}"
                            class="form-control" required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Brand</label>
-                    <input type="text" name="brand"
+                    <input type="text" name="brand" value="${dto.brand}"
                            class="form-control" required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Price</label>
                     <input type="number" name="price"
-                           step="0.01"
+                           step="0.01" value="${dto.price}"
                            class="form-control" required>
                 </div>
 

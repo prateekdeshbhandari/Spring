@@ -25,18 +25,21 @@
                 <div class="mb-3">
                     <label class="form-label">Mobile ID</label>
                     <input type="number" name="mobileId"
+                           value="${dto.mobileId}"
                            class="form-control" required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Mobile Name</label>
                     <input type="text" name="mobileName"
+                           value="${dto.mobileName}"
                            class="form-control" required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Brand</label>
                     <input type="text" name="brand"
+                           value="${dto.brand}"
                            class="form-control" required>
                 </div>
 
@@ -44,6 +47,7 @@
                     <label class="form-label">Price</label>
                     <input type="number" name="price"
                            step="0.01"
+                           value="${dto.price}"
                            class="form-control" required>
                 </div>
 

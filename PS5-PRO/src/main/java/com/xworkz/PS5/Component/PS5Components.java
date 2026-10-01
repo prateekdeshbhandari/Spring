@@ -24,11 +24,11 @@ public class PS5Components {
 public  String ps5Pro(@Valid Ps5ProDTO dto, BindingResult bindingResult){
     System.out.println("ps5Pro method called with DTO: " + dto);
     if(bindingResult.hasErrors()){
-        System.out.println(" Validation errors found: " + bindingResult.getFieldErrorCount());
+        System.out.println(" Validation errors found pliz fix it: ");
         ps5ProService.validateAndSave(dto);
 
     }else{
-        ps5ProService.validateAndSave(dto);
+        System.out.println("valide dtos"+bindingResult.getFieldErrorCount());
     }
 
     return "Ps5Pro.jsp";

@@ -20,7 +20,7 @@ public class Ps5ProDTO {
     private String model;
 
     @Min(10000)
-    @Max(100000)
+    @Max(1000000)
     private double price;
 
     @NotNull

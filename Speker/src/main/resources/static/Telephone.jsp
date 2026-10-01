@@ -32,6 +32,7 @@
                             <input type="number"
                                    name="operatorId"
                                    class="form-control"
+                                   value="${dto.operatorId}"
                                    placeholder="Enter Operator ID"
                                    required>
                         </div>
@@ -42,6 +43,7 @@
                             <input type="text"
                                    name="operatorName"
                                    class="form-control"
+                                   value="${dto.operatorName}"
                                    placeholder="Enter Operator Name"
                                    required>
                         </div>
@@ -52,6 +54,7 @@
                             <input type="text"
                                    name="company"
                                    class="form-control"
+                                   value="${dto.company}"
                                    placeholder="Enter Company Name"
                                    required>
                         </div>
@@ -62,6 +65,7 @@
                             <input type="tel"
                                    name="mobile"
                                    class="form-control"
+                                   value="${dto.mobile}"
                                    placeholder="Enter Mobile Number"
                                    required>
                         </div>

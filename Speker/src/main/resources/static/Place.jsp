@@ -32,6 +32,7 @@
                             <input type="number"
                                    name="placeId"
                                    class="form-control"
+                                   value="${dto.placeId}"
                                    placeholder="Enter Place ID"
                                    required>
                         </div>
@@ -42,6 +43,7 @@
                             <input type="text"
                                    name="placeName"
                                    class="form-control"
+                                   value="${dto.placeName}"
                                    placeholder="Enter Place Name"
                                    required>
                         </div>
@@ -52,6 +54,7 @@
                             <input type="text"
                                    name="city"
                                    class="form-control"
+                                   value="${dto.city}"
                                    placeholder="Enter City"
                                    required>
                         </div>
@@ -62,6 +65,7 @@
                             <input type="text"
                                    name="state"
                                    class="form-control"
+                                   value="${dto.state}"
                                    placeholder="Enter State"
                                    required>
                         </div>
