@@ -17,7 +17,7 @@ public class CameraComponent {
     @Autowired
     private CameraService cameraService;
     @RequestMapping("/camera")
-    public String camera(Model model, @Valid CameraDTO dto , BindingResult bindingResult){
+        public String camera(Model model, @Valid CameraDTO dto , BindingResult bindingResult){
         System.out.println("running the camera method");
         System.out.println("Received DTO: "+dto);
         if(!bindingResult.hasErrors()){
@@ -31,7 +31,7 @@ public class CameraComponent {
             model.addAttribute("error", "Validation failed. Please check the form.");
             List<ObjectError> error = bindingResult.getAllErrors();
             model.addAttribute("errors", error);
-            model.addAttribute("cameradto",dto);
+            model.addAttribute("cameradto", dto);
         }
         return "/Camera.jsp";
     }

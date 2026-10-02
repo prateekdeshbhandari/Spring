@@ -1,4 +1,7 @@
+
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <html>
 <head>
     <title>Mobile Registration</title>
@@ -7,8 +10,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
           rel="stylesheet">
 </head>
+<body style="background-image: url('${pageContext.request.contextPath}/images/mobile.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;">
 
-<body>
 
 <div class="container mt-5">
 
@@ -37,10 +44,19 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Brand</label>
-                    <input type="text" name="brand"
-                           value="${dto.brand}"
-                           class="form-control" required>
+                    <label class="form-label">Mobile Brand</label>
+
+                    <select name="brand" class="form-select">
+
+                        <option value="">-- Select Mobile Brand --</option>
+
+                        <c:forEach items="${mobileBrands}" var="brand">
+                            <option value="${brand}" ${brand == dto.brand ? 'selected' : ''}>
+                            ${brand}
+                            </option>
+                        </c:forEach>
+
+                    </select>
                 </div>
 
                 <div class="mb-3">

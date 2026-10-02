@@ -15,14 +15,14 @@ public class MobileDTO {
     private int mobileId;
 
     @NotBlank
-    @Size(min = 3, max = 30)
+    @Size(min = 3, max = 30,message = "Mobile name must be between 3 and 30 characters")
     private String mobileName;
 
     @NotBlank
-    @Size(min = 2, max = 30)
+    @Size(min = 2, max = 30, message = "Brand name must be between 2 and 30 characters")
     private String brand;
 
     @Min(1000)
-    @Max(200000)
+    @Max(2000000)
     private double price;
 }
