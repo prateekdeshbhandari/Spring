@@ -1,6 +1,7 @@
 
-
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@ page isELIgnored="false" %>
 <html>
 <head>
@@ -42,16 +43,14 @@
                            value="${dto.mobileName}"
                            class="form-control" required>
                 </div>
-
                 <div class="mb-3">
                     <label class="form-label">Mobile Brand</label>
 
                     <select name="brand" class="form-select">
-
                         <option value="">-- Select Mobile Brand --</option>
-
-                        <c:forEach items="${mobileBrands}" var="brand">
-                            <option value="${brand}" ${brand == dto.brand ? 'selected' : ''}>
+                            <c:forEach items="${mobileBrand}" var="brand">
+                            <option value="${brand}"
+                                    ${brand == dto.brand ? 'selected' : ''}>
                             ${brand}
                             </option>
                         </c:forEach>
@@ -85,6 +84,7 @@
 </script>
 ${sucssess}
 ${errors}
+${error}
 <c:forEach items="${errors}" var="error">
     <div class="alert alert-danger">${error.defaultMessage}</div>
 </c:forEach>

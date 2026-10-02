@@ -20,11 +20,15 @@ import java.util.stream.Stream;
 @Controller
 @RequestMapping("/mobile")
 public class MobileComponent {
-    List<String>mobileBrand;
+    private List<String>mobileBrand;
 
 
     @Autowired
     private MobileService mobileService;
+
+    public MobileComponent(){
+        System.out.println("Created MobileComponent using no-arg constructor...");
+    }
 
 @PostConstruct
     public  void onInit(){
@@ -40,7 +44,7 @@ public class MobileComponent {
             model.addAttribute("sucssess", "Mobile registered successfully!");
             model.addAttribute("mobileDTO",new MobileDTO());
             model.addAttribute("mobileBrand",mobileBrand);
-            model.addAttribute("errors",null);
+
 
         }else {
             System.out.println("invalid data: ");
