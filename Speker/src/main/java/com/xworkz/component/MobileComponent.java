@@ -20,19 +20,20 @@ import java.util.stream.Stream;
 @Controller
 @RequestMapping("/mobile")
 public class MobileComponent {
-    private List<String>mobileBrand;
+
+
 
 
     @Autowired
     private MobileService mobileService;
-
+    List<String>mobileBrand;
     public MobileComponent(){
         System.out.println("Created MobileComponent using no-arg constructor...");
     }
 
 @PostConstruct
     public  void onInit(){
-        mobileBrand= Stream.of("Samsung", "Apple", "OnePlus", "Vivo", "Oppo").collect(Collectors.toList());
+     mobileBrand= Stream.of("Samsung", "Apple", "OnePlus", "Vivo", "Oppo").collect(Collectors.toList());
     }
    @PostMapping
     public String mobile(Model model, @Valid MobileDTO dto , BindingResult bindingResult){

@@ -43,18 +43,16 @@
                            value="${dto.mobileName}"
                            class="form-control" required>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Mobile Brand</label>
+                <div class="form-group">
+                    <label for="mobileBrand">Mobile Brand:</label>
 
-                    <select name="brand" class="form-select">
+                    <select id="mobileBrand" name="mobileBrand" class="form-select" required>
                         <option value="">-- Select Mobile Brand --</option>
-                            <c:forEach items="${mobileBrand}" var="brand">
-                            <option value="${brand}"
-                                    ${brand == dto.brand ? 'selected' : ''}>
-                            ${brand}
-                            </option>
-                        </c:forEach>
 
+                        <c:forEach items="${mobileBrand}" var="brand">
+                            <option value="${brand}"
+                                    ${brand == dto.mobileBrand ? 'selected' : ''}>${brand}</option>
+                        </c:forEach>
                     </select>
                 </div>
 
