@@ -1,6 +1,6 @@
-package com.xworkz.PS5.ApplicationInit;
+package com.xworkz.Wine.ApplicationInit;
 
-import com.xworkz.PS5.Config.AplicetionConfig;
+import com.xworkz.Wine.Config.AplicetionConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class ApplicationInit extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -16,6 +16,6 @@ public class ApplicationInit extends AbstractAnnotationConfigDispatcherServletIn
 
     @Override
     protected String[] getServletMappings() {
-        return new String[]{"/PS5"};
+        return new String[]{"/wine"};
     }
 }

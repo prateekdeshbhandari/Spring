@@ -6,7 +6,7 @@
 
 <body>
 
-<a href="Ps5Pro.jsp">PS5 Pro</a>
+<a href="Wine.jsp">PS5 Pro</a>
 
 </body>
 </html>
