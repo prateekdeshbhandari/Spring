@@ -7,10 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -52,6 +54,35 @@ public class WineComponents {
         }
 
         return "Wine.jsp";
+    }
+
+    @PostMapping("/update")
+    public String onUpdate(Model model, @Valid WineDTO wineDTO, BindingResult bindingResult) {
+        System.out.println("running onUpdate()");
+
+        if (bindingResult.hasErrors()) {
+            System.out.println("There are validation errors, please fix it");
+            List<ObjectError> errors = bindingResult.getAllErrors();
+            model.addAttribute("validationErrors", errors);
+            model.addAttribute("wineDTO", wineDTO);
+        } else {
+            model.addAttribute("message", "Wine updated successfully");
+            System.out.println("no validation errors");
+            System.out.println(wineDTO);
+            this.wineService.validateAndSave(wineDTO);
+            model.addAttribute("wineDTO", new WineDTO());
+        }
+
+        return "Wine.jsp";
+    }
+
+    @GetMapping("/showAll")
+    public String getShowAll(Model model) {
+        System.out.println("running getShowAll()");
+        List<WineDTO> wineDTOList = this.wineService.getShowAll();
+
+        model.addAttribute("wineDTOList", wineDTOList);
+        return "WineDisplay.jsp";
     }
 
 
