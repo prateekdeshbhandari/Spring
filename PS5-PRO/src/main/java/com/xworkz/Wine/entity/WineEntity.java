@@ -15,6 +15,8 @@ import java.util.Date;
 @NamedQuery(name = "findAll", query = "SELECT w FROM WineEntity w")
 public class WineEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column(name = "company_name")
     private String companyName;
 

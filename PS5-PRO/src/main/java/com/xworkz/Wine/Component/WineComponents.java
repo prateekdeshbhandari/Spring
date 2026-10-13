@@ -10,6 +10,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -24,7 +25,6 @@ public class WineComponents {
     public void WineController() {
         System.out.println("WineController create");
     }
-
 
 
     @PostMapping
@@ -53,37 +53,31 @@ public class WineComponents {
             model.addAttribute("wineDTO", new WineDTO());
         }
 
-        return "Wine.jsp";
+        return "Wine";
     }
 
-    @PostMapping("/update")
-    public String onUpdate(Model model, @Valid WineDTO wineDTO, BindingResult bindingResult) {
-        System.out.println("running onUpdate()");
-
-        if (bindingResult.hasErrors()) {
-            System.out.println("There are validation errors, please fix it");
-            List<ObjectError> errors = bindingResult.getAllErrors();
-            model.addAttribute("validationErrors", errors);
-            model.addAttribute("wineDTO", wineDTO);
-        } else {
-            model.addAttribute("message", "Wine updated successfully");
-            System.out.println("no validation errors");
-            System.out.println(wineDTO);
-            this.wineService.validateAndSave(wineDTO);
-            model.addAttribute("wineDTO", new WineDTO());
-        }
-
-        return "Wine.jsp";
-    }
 
     @GetMapping("/showAll")
     public String getShowAll(Model model) {
         System.out.println("running getShowAll()");
-        List<WineDTO> wineDTOList = this.wineService.getShowAll();
 
+        List<WineDTO> wineDTOList = this.wineService.getShowAlll();
         model.addAttribute("wineDTOList", wineDTOList);
-        return "WineDisplay.jsp";
+
+        return "WineDisplay";
     }
 
+    @GetMapping("/edit")
+    public String getEdit(@RequestParam("id") Integer id, Model model) {
+        System.out.println("running getEdit()");
+        WineDTO wineDTO = this.wineService.getEdit(id);
+        if (wineDTO != null) {
+            model.addAttribute("wineDTO", wineDTO);
+        } else {
+            model.addAttribute("error", "Wine not found with ID: " + id);
+        }
 
-}
+        return "Wine";
+    }
+    }
+

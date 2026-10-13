@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,7 +42,7 @@ private WineRespository wineRespository;
     }
 
     @Override
-    public List<WineDTO> getShowAll() {
+    public List<WineDTO> getShowAlll() {
         System.out.println("get getShowAll method call..");
         List<WineEntity>wineEntities=this.wineRespository.findAll();
         List<WineDTO>wineDTOList=new ArrayList<>();
@@ -54,5 +55,27 @@ private WineRespository wineRespository;
         }
         System.out.println("Total wine list"+wineDTOList.size());
         return wineDTOList;
+    }
+
+    @Override
+    public WineDTO getEdit(Integer id) {
+
+        System.out.println("The findById() method is called in service");
+
+        if ( id > 0) {
+
+            Optional<WineEntity> optional = this.wineRespository.EditById(id);
+
+            if (optional.isPresent()) {
+                WineEntity wineEntity = optional.get();
+                WineDTO wineDTO = new WineDTO();
+                BeanUtils.copyProperties(wineEntity, wineDTO);
+
+                return wineDTO;
+            }
+        }
+
+        System.out.println("Invalid ID or Wine record not found");
+        return null;
     }
 }

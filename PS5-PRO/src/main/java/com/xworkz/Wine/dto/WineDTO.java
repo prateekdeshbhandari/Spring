@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Data
 public class WineDTO {
-
+    private Integer id;
 
 
     @NotBlank

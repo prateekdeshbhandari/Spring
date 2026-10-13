@@ -1,11 +1,10 @@
-
+```jsp
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
 
-<!DOCTYPE html>
 <html>
 <head>
-    <title>Wine Form</title>
+    <title>Add Wine</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -48,16 +47,20 @@
     <div class="card shadow-lg wine-card">
         <div class="card-body p-4">
 
-            <h2 class="text-center mb-4">
-                <c:choose>
-                    <c:when test="${not empty wineDTO.companyName}">
-                        Update Wine
-                    </c:when>
-                    <c:otherwise>
-                        Wine Form
-                    </c:otherwise>
-                </c:choose>
-            </h2>
+
+                <h2 class="text-center mb-4">
+                    <c:choose>
+                        <c:when test="${not empty wineDTO.id}">
+                            Update Wine
+                        </c:when>
+                        <c:otherwise>
+                            Wine Form
+                        </c:otherwise>
+                    </c:choose>
+                </h2>
+
+            <h2 class="text-center mb-4">Add Wine</h2>
+
 
             <c:if test="${not empty message}">
                 <div class="alert alert-success">${message}</div>
@@ -73,8 +76,8 @@
             </a>
 
             <c:choose>
-                <c:when test="${not empty wineDTO.companyName}">
-                    <form action="${pageContext.request.contextPath}/wine/update"
+                <c:when test="${not empty wineDTO.id}">
+                    <form action="${pageContext.request.contextPath}/wine/edit"
                           method="post">
                 </c:when>
                 <c:otherwise>
@@ -83,42 +86,49 @@
                 </c:otherwise>
             </c:choose>
 
+                <div class="mb-3">
+                    <label class="form-label">Company Name</label>
+                    <input type="text"
+                           name="companyName"
+                           class="form-control"
+                           placeholder="Enter company name"
+                           value="${wineDTO.companyName}"
+                           required>
+                </div>
 
-            <div class="mb-3">
-                <label class="form-label">Company Name</label>
-                <input type="text" name="companyName"
-                       class="form-control"
-                       placeholder="Enter company name"
-                       value="${wineDTO.companyName}">
-            </div>
+                <div class="mb-3">
+                    <label class="form-label">Manufacturer Name</label>
+                    <input type="text"
+                           name="manfName"
+                           class="form-control"
+                           placeholder="Enter manufacturer name"
+                           value="${wineDTO.manfName}"
+                           required>
+                </div>
 
-            <div class="mb-3">
-                <label class="form-label">Manufacturer Name</label>
-                <input type="text" name="manfName"
-                       class="form-control"
-                       placeholder="Enter manufacturer name"
-                       value="${wineDTO.manfName}">
-            </div>
+                <div class="mb-3">
+                    <label class="form-label">Manufacturing Date</label>
+                    <input type="date"
+                           name="manfDate"
+                           class="form-control"
+                           value="${wineDTO.manfDate}"
+                           required>
+                </div>
 
-            <div class="mb-3">
-                <label class="form-label">Manufacturing Date</label>
-                <input type="date" name="manfDate"
-                       class="form-control"
-                       value="${wineDTO.manfDate}">
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Age</label>
-                <input type="number" step="0.1" name="age"
-                       class="form-control"
-                       placeholder="Enter age"
-                       value="${wineDTO.age}">
-            </div>
-
+                <div class="mb-3">
+                    <label class="form-label">Age</label>
+                    <input type="number"
+                           step="0.1"
+                           name="age"
+                           class="form-control"
+                           placeholder="Enter age"
+                           value="${wineDTO.age}"
+                           required>
+                </div>
             <div class="text-center">
                 <button type="submit" class="btn btn-wine px-4">
                     <c:choose>
-                        <c:when test="${not empty wineDTO.companyName}">
+                        <c:when test="${not empty wineDTO.id}">
                             Update Wine
                         </c:when>
                         <c:otherwise>
@@ -129,7 +139,6 @@
             </div>
 
             </form>
-            <span class="text-danger">${error}</span>
 
             <div class="text-danger mt-3">
                 <c:forEach items="${validationErrors}" var="objectError">

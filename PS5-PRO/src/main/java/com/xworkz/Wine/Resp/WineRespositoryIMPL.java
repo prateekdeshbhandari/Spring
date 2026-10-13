@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class WineRespositoryIMPL implements WineRespository{
@@ -20,6 +21,18 @@ public class WineRespositoryIMPL implements WineRespository{
         entityManager.merge(entity);
         return true;
     }
+
+    @Override
+    public Optional<WineEntity> EditById(int id) {
+        System.out.println("findById() called in WineRepoImpl() with id: " + id);
+        WineEntity wineEntity= this.entityManager.find(WineEntity.class, id);
+        return Optional.ofNullable(wineEntity);
+    }
+
+    public WineRespositoryIMPL() {
+        System.out.println("creted WineRepoImpl()");
+    }
+
 
     @Override
     public List<WineEntity> findAll() {
