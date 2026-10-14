@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
 
@@ -89,8 +88,13 @@
                             <td>${wineDTO.age}</td>
                             <td>
                                 <a href="${pageContext.request.contextPath}/wine/edit?id=${wineDTO.id}"
-                                   class="btn btn-sm btn-primary">
+                                   class="btn btn-sm btn-primary me-2">
                                     Edit
+                                </a>
+                                <a href="${pageContext.request.contextPath}/wine/delete?id=${wineDTO.id}"
+                                   class="btn btn-sm btn-danger"
+                                   onclick="return confirm('Are you sure you want to delete this record?')">
+                                    Delete
                                 </a>
                             </td>
                         </tr>

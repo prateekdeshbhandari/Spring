@@ -8,8 +8,8 @@ import java.util.Optional;
 
 public interface WineRespository {
     boolean save(WineEntity entity);
-//    boolean update(WineDTO dto);
-//    boolean delete(WineDTO dto);
+    boolean update(WineEntity entity);
+    boolean delete(int id);
     Optional<WineEntity> EditById(int id);
     List<WineEntity> findAll();
 }

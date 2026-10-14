@@ -1,7 +1,7 @@
-```jsp
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
 
+<!DOCTYPE html>
 <html>
 <head>
     <title>Add Wine</title>
@@ -54,12 +54,10 @@
                             Update Wine
                         </c:when>
                         <c:otherwise>
-                            Wine Form
+                            Add Wine
                         </c:otherwise>
                     </c:choose>
                 </h2>
-
-            <h2 class="text-center mb-4">Add Wine</h2>
 
 
             <c:if test="${not empty message}">
@@ -77,7 +75,7 @@
 
             <c:choose>
                 <c:when test="${not empty wineDTO.id}">
-                    <form action="${pageContext.request.contextPath}/wine/edit"
+                    <form action="${pageContext.request.contextPath}/wine/update"
                           method="post">
                 </c:when>
                 <c:otherwise>
@@ -85,6 +83,10 @@
                           method="post">
                 </c:otherwise>
             </c:choose>
+
+                <c:if test="${not empty wineDTO.id}">
+                    <input type="hidden" name="id" value="${wineDTO.id}">
+                </c:if>
 
                 <div class="mb-3">
                     <label class="form-label">Company Name</label>

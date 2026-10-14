@@ -79,5 +79,32 @@ public class WineComponents {
 
         return "Wine";
     }
+
+    @PostMapping("/update")
+    public String onUpdate(Model model, @Valid WineDTO wineDTO, BindingResult bindingResult) {
+        System.out.println("running onUpdate()");
+
+        if (bindingResult.hasErrors()) {
+            System.out.println("There are validation errors, please fix it");
+            List<ObjectError> errors = bindingResult.getAllErrors();
+            model.addAttribute("validationErrors", errors);
+            model.addAttribute("wineDTO", wineDTO);
+            return "Wine";
+        } else {
+            model.addAttribute("message", "Wine updated successfully");
+            System.out.println("no validation errors");
+            System.out.println(wineDTO);
+            this.wineService.validateAndUpdate(wineDTO);
+            model.addAttribute("wineDTO", new WineDTO());
+            return "redirect:/wine/showAll";
+        }
     }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam("id") Integer id) {
+        System.out.println("running delete() with id: " + id);
+        this.wineService.delete(id);
+        return "redirect:/wine/showAll";
+    }
+}
 

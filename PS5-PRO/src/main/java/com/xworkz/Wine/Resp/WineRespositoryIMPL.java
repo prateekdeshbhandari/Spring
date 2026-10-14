@@ -18,8 +18,29 @@ public class WineRespositoryIMPL implements WineRespository{
     public boolean save(WineEntity entity) {
         System.out.println("Running save in WineRespositoryIMPL");
         System.out.println(entity);
+        entityManager.persist(entity);
+        return true;
+    }
+
+    @Override
+    public boolean update(WineEntity entity) {
+        System.out.println("Running update in WineRespositoryIMPL");
+        System.out.println(entity);
         entityManager.merge(entity);
         return true;
+    }
+
+    @Override
+    public boolean delete(int id) {
+        System.out.println("Running delete in WineRespositoryIMPL with id: " + id);
+        WineEntity wineEntity = entityManager.find(WineEntity.class, id);
+        if(wineEntity != null) {
+            entityManager.remove(wineEntity);
+            System.out.println("Entity deleted successfully");
+            return true;
+        }
+        System.out.println("Entity not found for deletion");
+        return false;
     }
 
     @Override

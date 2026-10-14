@@ -8,6 +8,6 @@ public interface WineService {
    boolean validateAndSave(WineDTO dto);
    List<WineDTO>getShowAlll();
    WineDTO getEdit(Integer id);
-
-
+   boolean validateAndUpdate(WineDTO dto);
+   boolean delete(Integer id);
 }

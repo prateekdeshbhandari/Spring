@@ -78,4 +78,35 @@ private WineRespository wineRespository;
         System.out.println("Invalid ID or Wine record not found");
         return null;
     }
+
+    @Override
+    public boolean validateAndUpdate(WineDTO dto) {
+        System.out.println("Validating and updating DTO: " + dto);
+        if(dto != null && dto.getId() != null) {
+            System.out.println("DTO is not null with ID, proceeding with update");
+            Optional<WineEntity> optional = this.wineRespository.EditById(dto.getId());
+            if(optional.isPresent()) {
+                WineEntity wineEntity = optional.get();
+                BeanUtils.copyProperties(dto, wineEntity);
+                wineRespository.update(wineEntity);
+                System.out.println("Update successful for ID: " + dto.getId());
+                return true;
+            } else {
+                System.out.println("Entity not found with ID: " + dto.getId());
+                return false;
+            }
+        }
+        System.out.println("DTO is null or ID is missing");
+        return false;
+    }
+
+    @Override
+    public boolean delete(Integer id) {
+        System.out.println("Delete method called in service with ID: " + id);
+        if(id != null && id > 0) {
+            return this.wineRespository.delete(id);
+        }
+        System.out.println("Invalid ID for deletion");
+        return false;
+    }
 }
