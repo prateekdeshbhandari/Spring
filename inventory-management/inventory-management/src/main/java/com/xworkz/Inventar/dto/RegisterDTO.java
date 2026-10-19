@@ -1,11 +1,17 @@
 package com.xworkz.Inventar.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-
+@Getter
+@Setter
+@ToString
     public class RegisterDTO {
 
         @NotBlank(message = "Name is required")
@@ -17,7 +23,7 @@ import javax.validation.constraints.Size;
         private String email;
 
         @NotBlank(message = "Password is required")
-        @Size(min = 8, message = "Password must be at least 8 characters")
+        @Size(min = 6,max = 25, message = "Password must be at least 8 characters")
         private String password;
 
         @NotBlank(message = "Mobile number is required")

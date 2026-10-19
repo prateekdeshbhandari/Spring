@@ -29,24 +29,25 @@ public class RegisterController {
     public String onLoadRegister(Model model){
         System.out.println("Running onLoadRegister in RegisterController...");
         model.addAttribute("RegisterDto", new RegisterDTO());
-        return "register";
+        return "Register";
     }
 
   @PostMapping
-    public String onRegister(@Valid @ModelAttribute("RegisterDto") RegisterDTO registerDTO, BindingResult bindingResult, Model model){
+    public String onRegister(@Valid @ModelAttribute("registerDTO") RegisterDTO registerDTO, BindingResult bindingResult, Model model){
         System.out.println("Running onRegister in RegisterController...");
 
         if(bindingResult.hasErrors()){
             System.out.println("Validation failed:");
             List<ObjectError>error=bindingResult.getAllErrors();
-            model.addAttribute("error", "Validation failed. Please check the form.");
-            return "register";
+           model.addAttribute("error", error);
+
+        }else {
+            this.registerService.registerService(registerDTO);
+            model.addAttribute("successMessage", "Register details saved successfully");
+            model.addAttribute("RegisterDto", new RegisterDTO());
+
         }
-      this.registerService.registerService(registerDTO);
-      model.addAttribute("successMessage", "Register details saved successfully");
-      model.addAttribute("RegisterDto", new RegisterDTO());
+      return "Register";
 
-
-        return "register";
     }
 }

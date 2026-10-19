@@ -26,10 +26,6 @@ public class WineDataConfig {
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/PS5_PRO");
-        dataSource.setUsername("root");
-        dataSource.setPassword("Prateek@#1");
 
         return dataSource;
     }

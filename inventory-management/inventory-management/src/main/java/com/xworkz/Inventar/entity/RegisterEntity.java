@@ -29,12 +29,12 @@ public class RegisterEntity {
         private String password;
 
         @Column(name = "phone_number")
-        private String phoneNumber;
+        private String mobileNumber;
 
         @Column(name = "address")
         private String address;
 
-        @Column(name = "role")
-        private String role;
+        @Column(name = "gender")
+        private String gender;
     }
 

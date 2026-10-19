@@ -1,9 +1,10 @@
 package com.xworkz.Inventar.config;
 
-//import lombok.Values;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.Value;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -16,19 +17,20 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
+
 public class ApplictionDataConfig {
 
-    @Value("${jdbc.driver_class_name}")
-    private String driverClassName;
-
-    @Value("${jdbc.url}")
-    private String url;
-
-    @Value("${jdbc.username}")
-    private String username;
-
-    @Value("${jdbc.password}")
-    private String password;
+//    @Value("${jdbc.driver_class_name}")
+//    private String driverClassName;
+//
+//    @Value("${jdbc.url}")
+//    private String url;
+//
+//    @Value("${jdbc.username}")
+//    private String username;
+//
+//    @Value("${jdbc.password}")
+//    private String password;
 
 
     public ApplictionDataConfig() {
@@ -40,11 +42,11 @@ public class ApplictionDataConfig {
     public DataSource dataSource() {
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/inventory_management");
+        dataSource.setUsername("root");
+        dataSource.setPassword("Prateek@#1");
 
-        dataSource.setDriverClassName(this.driverClassName);
-        dataSource.setUrl(this.url);
-        dataSource.setUsername(this.username);
-        dataSource.setPassword(this.password);
 
         return dataSource;
     }
