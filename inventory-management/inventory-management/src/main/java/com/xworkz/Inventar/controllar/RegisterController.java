@@ -28,7 +28,7 @@ public class RegisterController {
     @GetMapping
     public String onLoadRegister(Model model){
         System.out.println("Running onLoadRegister in RegisterController...");
-        model.addAttribute("RegisterDto", new RegisterDTO());
+        model.addAttribute("registerDTO", new RegisterDTO());
         return "Register";
     }
 
