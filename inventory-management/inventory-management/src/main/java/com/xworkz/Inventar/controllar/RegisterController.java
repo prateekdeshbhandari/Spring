@@ -1,6 +1,7 @@
 package com.xworkz.Inventar.controllar;
 
 import com.xworkz.Inventar.Service.RegisterService;
+import com.xworkz.Inventar.dto.LoginDto;
 import com.xworkz.Inventar.dto.RegisterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,21 +34,48 @@ public class RegisterController {
     }
 
   @PostMapping
-    public String onRegister(@Valid @ModelAttribute("registerDTO") RegisterDTO registerDTO, BindingResult bindingResult, Model model){
-        System.out.println("Running onRegister in RegisterController...");
+    public String onRegister(@Valid @ModelAttribute("registerDTO") RegisterDTO registerDTO, BindingResult bindingResult, Model model) {
+      System.out.println("Running onRegister in RegisterController...");
 
-        if(bindingResult.hasErrors()){
-            System.out.println("Validation failed:");
-            List<ObjectError>error=bindingResult.getAllErrors();
-           model.addAttribute("error", error);
+      if (bindingResult.hasErrors()) {
+          System.out.println("Validation failed:");
+          List<ObjectError> error = bindingResult.getAllErrors();
+          model.addAttribute("error", error);
 
-        }else {
-            this.registerService.registerService(registerDTO);
-            model.addAttribute("successMessage", "Register details saved successfully");
-            model.addAttribute("RegisterDto", new RegisterDTO());
+      } else {
+          boolean saved = this.registerService.registerService(registerDTO);
+          if (saved) {
+              model.addAttribute("successMessage", "Register details saved successfully");
+              model.addAttribute("RegisterDto", new RegisterDTO());
+          } else {
+              model.addAttribute("error", "Failed to save registration details");
+          }
 
-        }
+      }
       return "Register";
 
+  }
+    @GetMapping("/login")
+    public String onLoadLogin(Model model){
+        System.out.println("Running onLoadLogin in RegisterController...");
+        model.addAttribute("loginDTO", new RegisterDTO());
+        return "Login";
+    }
+    @PostMapping("/login")
+    public String onLogin(@Valid LoginDto loginDTO, BindingResult bindingResult, Model model){
+        System.out.println("Running onLogin in RegisterController...");
+        if(bindingResult.hasErrors()){
+            System.out.println("Validation failed:");
+            List<ObjectError> error = bindingResult.getAllErrors();
+            model.addAttribute("error", error);
+        } else {
+            this.registerService.loginService(loginDTO);
+            model.addAttribute("successMessage", "Login details saved successfully");
+            model.addAttribute("loginDTO", new RegisterDTO());
+        }
+        return "Login";
     }
 }
+
+
+

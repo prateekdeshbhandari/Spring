@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Repository
 @Transactional
@@ -21,4 +22,38 @@ public class RegisterRepositoryImpl implements RegisterRepository {
         System.out.println("RegisterEntity saved successfully");
 
     }
-}
+
+    @Override
+    public RegisterEntity findByEmail(String email) {
+
+        System.out.println("Running findByEmail() in RegisterRepositoryImpl");
+
+
+        System.out.println("Finding email: [" + email + "]");
+
+        try {
+            List<RegisterEntity> list = entityManager
+                    .createNamedQuery("getEmailId", RegisterEntity.class)
+                    .setParameter("email", email)
+                    .getResultList();
+
+            if (list.isEmpty()) {
+                return new RegisterEntity();
+            }
+
+            return list.get(0);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public RegisterEntity findByPassword(String password) {
+        return null;
+    }
+
+
+    }
+

@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @ToString
 @Table(name = "register_details")
-
+@NamedQuery(name = "getEmailId", query = "SELECT e FROM RegisterEntity e WHERE e.email = :email")
 public class RegisterEntity {
 
 
@@ -36,5 +36,8 @@ public class RegisterEntity {
 
         @Column(name = "gender")
         private String gender;
+
+    @OneToOne(mappedBy = "register", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private AuditEntity auditEntity;
     }
 
