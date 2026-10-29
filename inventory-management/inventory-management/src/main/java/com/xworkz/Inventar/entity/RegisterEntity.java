@@ -12,6 +12,8 @@ import javax.persistence.*;
 @ToString
 @Table(name = "register_details")
 @NamedQuery(name = "getEmailId", query = "SELECT e FROM RegisterEntity e WHERE e.email = :email")
+@NamedQuery(name = "findpno", query = "SELECT e FROM RegisterEntity e WHERE e.mobileNumber = :phoneNumber")
+
 public class RegisterEntity {
 
 
@@ -22,13 +24,13 @@ public class RegisterEntity {
         @Column(name = "name")
         private String name;
 
-        @Column(name = "email")
+        @Column(name = "email",nullable = false,unique = true)
         private String email;
 
         @Column(name = "password")
         private String password;
 
-        @Column(name = "phone_number")
+        @Column(name = "phone_number", nullable = false,unique = true)
         private String mobileNumber;
 
         @Column(name = "address")

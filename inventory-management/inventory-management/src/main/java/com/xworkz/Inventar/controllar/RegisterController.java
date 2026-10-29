@@ -36,25 +36,33 @@ public class RegisterController {
   @PostMapping
     public String onRegister(@Valid @ModelAttribute("registerDTO") RegisterDTO registerDTO, BindingResult bindingResult, Model model) {
       System.out.println("Running onRegister in RegisterController...");
+try {
+    if (bindingResult.hasErrors()) {
+        System.out.println("Validation failed:");
+        List<ObjectError> error = bindingResult.getAllErrors();
+        model.addAttribute("error", error);
 
-      if (bindingResult.hasErrors()) {
-          System.out.println("Validation failed:");
-          List<ObjectError> error = bindingResult.getAllErrors();
-          model.addAttribute("error", error);
+    } else {
+        boolean saved = this.registerService.registerService(registerDTO);
+        if (saved) {
+            model.addAttribute("successMessage", "Register details saved successfully");
+            model.addAttribute("RegisterDto", new RegisterDTO());
+        } else {
+            model.addAttribute("error", "Failed to save registration details");
+        }
 
-      } else {
-          boolean saved = this.registerService.registerService(registerDTO);
-          if (saved) {
-              model.addAttribute("successMessage", "Register details saved successfully");
-              model.addAttribute("RegisterDto", new RegisterDTO());
-          } else {
-              model.addAttribute("error", "Failed to save registration details");
-          }
+    }
+    return "Register";
+}catch (RuntimeException e){
+    model.addAttribute("errorMessage", e.getMessage());
+    model.addAttribute("registerDTO", registerDTO);
 
-      }
-      return "Register";
+    System.out.println("Exception occurred: " + e.getMessage());
+    return "Register";
+}
 
   }
+
     @GetMapping("/login")
     public String onLoadLogin(Model model){
         System.out.println("Running onLoadLogin in RegisterController...");

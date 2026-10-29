@@ -43,6 +43,28 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
+    public String findEmail(String email) {
+        System.out.println("Running findEmail() in RegisterServiceImpl");
+boolean exist=registerRepository.emailExists(email);
+        return exist ? "Email Id Already Exist" : "Email Id not Exist";
+    }
+
+    @Override
+    public String findPhoneNumber(String phoneNumber) {
+
+        System.out.println("Invoking findPhoneNumber:Service " + phoneNumber);
+        String status = null;
+
+        if (phoneNumber != null) {
+
+            Boolean isCheck = registerRepository.phoneNumberExists(phoneNumber);
+            status = (isCheck) ? "Phone Number Already Exist" : "Phone Number Not Exist";
+        }
+
+        return status;
+    }
+
+    @Override
     public RegisterDTO loginService(LoginDto dto) {
         System.out.println("Running loginService() in RegisterServiceImpl");
         System.out.println("Running checkUserByLogin()");

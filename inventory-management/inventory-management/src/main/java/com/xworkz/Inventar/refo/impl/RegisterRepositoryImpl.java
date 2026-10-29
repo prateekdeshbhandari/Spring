@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import java.util.List;
 
 @Repository
@@ -20,7 +21,6 @@ public class RegisterRepositoryImpl implements RegisterRepository {
         System.out.println("RegisterEntity: " + registerEntity);
         entityManager.persist(registerEntity);
         System.out.println("RegisterEntity saved successfully");
-
     }
 
     @Override
@@ -47,6 +47,37 @@ public class RegisterRepositoryImpl implements RegisterRepository {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public boolean emailExists(String email) {
+
+
+
+        System.out.println("Checking email: [" + email + "]");
+
+        List<?> result = entityManager
+                .createQuery(  "SELECT COUNT(r) FROM RegisterEntity r WHERE r.email = :email")
+                .setParameter("email", email.trim())
+                .getResultList();
+
+        System.out.println("Records found: " + result.size());
+
+        return !result.isEmpty();
+    }
+
+    @Override
+    public boolean phoneNumberExists(String phoneNumber) {
+
+        RegisterEntity entity = (RegisterEntity) entityManager
+                .createNamedQuery("findpno")
+                .setParameter("phoneNumber", phoneNumber)
+                .getResultList()
+                .stream()
+                .findFirst()
+                .orElse(null);
+
+        return entity != null;
     }
 
     @Override

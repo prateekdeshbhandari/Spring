@@ -1,9 +1,12 @@
 package com.xworkz.Inventar.dto;
 
+import com.xworkz.Inventar.entity.AuditEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.CascadeType;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -36,6 +39,7 @@ import javax.validation.constraints.Size;
 @NotBlank(message = "Gender is required")
 @Size(min = 1, max = 10, message = "Gender must be between 1 and 10 characters")
        private String gender;
+
 
     }
 

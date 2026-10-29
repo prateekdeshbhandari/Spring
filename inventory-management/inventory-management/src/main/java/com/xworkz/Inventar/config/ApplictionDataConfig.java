@@ -66,39 +66,67 @@ public class ApplictionDataConfig {
     public Properties properties()
     {
         System.out.println("Running properties() in DataBaseConfiguration");
-        Properties properties=new Properties();
 
-        properties.setProperty("spring.jpa.properties.hibernate.dialect",environment.getProperty("spring.jpa.properties.hibernate.dialect"));
-        properties.setProperty("spring.jpa.hibernate.ddl-auto",environment.getProperty("spring.jpa.hibernate.ddl-auto"));
-        properties.setProperty("spring.jpa.show-sql",environment.getProperty("spring.jpa.show-sql"));
-        properties.setProperty("spring.jpa.hibernate.format_sql",environment.getProperty("spring.jpa.hibernate.format_sql"));
+        Properties properties = new Properties();
 
-//        properties.put("hibernate.dialect","org.hibernate.dialect.MySQLDialect");
-//        properties.put("hibernate.show_sql",true);
-//        properties.put("hibernate.hbm2ddl.auto","update");
+        properties.setProperty(
+                "hibernate.dialect",
+                "org.hibernate.dialect.MySQL8Dialect");
+
+        properties.setProperty(
+                "hibernate.hbm2ddl.auto",
+                environment.getProperty(
+                        "spring.jpa.hibernate.ddl-auto", "update"));
+
+        properties.setProperty(
+                "hibernate.show_sql",
+                environment.getProperty(
+                        "spring.jpa.show-sql", "true"));
+
+        properties.setProperty(
+                "hibernate.format_sql",
+                environment.getProperty(
+                        "spring.jpa.hibernate.format_sql", "true"));
 
         return properties;
     }
 
+
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(DataSource dataSource)
     {
-        System.out.println("Running entityManagerFactoryBean() in DataBaseConfiguration");
-        LocalContainerEntityManagerFactoryBean factoryBean=new LocalContainerEntityManagerFactoryBean();
+        System.out.println(
+                "Running entityManagerFactoryBean() in DatabaseConfiguration");
+
+        LocalContainerEntityManagerFactoryBean factoryBean =
+                new LocalContainerEntityManagerFactoryBean();
+
         factoryBean.setDataSource(dataSource);
-        factoryBean.setPackagesToScan("com.xworkz.Inventar.entity");
+
+        factoryBean.setPackagesToScan(
+                "com.xworkz.Inventar.entity");
+
+        factoryBean.setJpaVendorAdapter(
+                new HibernateJpaVendorAdapter());
+
         factoryBean.setJpaProperties(properties());
-        factoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+
         return factoryBean;
     }
 
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory)
     {
-        System.out.println("Running transactionManager() in DataBaseConfiguration");
-        JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
-        jpaTransactionManager.setEntityManagerFactory(entityManagerFactory);
-        return jpaTransactionManager;
+        System.out.println(
+                "Running transactionManager() in DatabaseConfiguration");
+
+        JpaTransactionManager transactionManager =
+                new JpaTransactionManager();
+
+        transactionManager.setEntityManagerFactory(
+                entityManagerFactory);
+
+        return transactionManager;
     }
 }
 

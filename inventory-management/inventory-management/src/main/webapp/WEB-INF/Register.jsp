@@ -1,9 +1,9 @@
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<!DOCTYPE html>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -156,7 +156,27 @@
 
                 <c:if test="${not empty error}">
                     <div class="alert alert-danger" role="alert">
-                        <c:out value="${error}"/>
+                        <c:choose>
+                            <c:when test="${error.getClass().simpleName == 'String'}">
+                                <c:out value="${error}"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach items="${error}" var="err">
+                                    <c:out value="${err.defaultMessage}"/><br/>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </c:if>
+
+                <c:if test="${not empty errorMessage}">
+                    <div class="alert alert-danger" role="alert">
+                        <c:out value="${errorMessage}"/>
+                    </div>
+                </c:if>
+                <c:if test="${not empty errorMessage}">
+                    <div class="alert alert-danger" role="alert">
+                        <c:out value="${errorMessage}"/>
                     </div>
                 </c:if>
 
@@ -280,6 +300,7 @@
                            class="text-decoration-none fw-semibold">
                             Login here
                         </a>
+
                     </p>
 
                 </form:form>
@@ -288,6 +309,8 @@
         </div>
     </div>
 </main>
+
+
 
 <!-- Footer -->
 <footer>
