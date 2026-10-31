@@ -25,41 +25,14 @@ public class RegisterRepositoryImpl implements RegisterRepository {
         System.out.println("RegisterEntity saved successfully");
     }
 
-    @Override
-    public RegisterEntity findByEmail(String email) {
-
-        System.out.println("Running findByEmail() in RegisterRepositoryImpl");
-
-
-        System.out.println("Finding email: [" + email + "]");
-
-        try {
-            List<RegisterEntity> list = entityManager
-                    .createNamedQuery("getEmailId", RegisterEntity.class)
-                    .setParameter("email", email)
-                    .getResultList();
-
-            if (list.isEmpty()) {
-                return new RegisterEntity();
-            }
-
-            return list.get(0);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     @Override
     public boolean emailExists(String email) {
 
-
-
         System.out.println("Checking email: [" + email + "]");
 
         List<?> result = entityManager
-                .createQuery(  "SELECT COUNT(r) FROM RegisterEntity r WHERE r.email = :email")
+                .createQuery("SELECT e FROM RegisterEntity e WHERE e.email = :email")
                 .setParameter("email", email.trim())
                 .getResultList();
 
@@ -82,10 +55,6 @@ public class RegisterRepositoryImpl implements RegisterRepository {
         return entity != null;
     }
 
-    @Override
-    public RegisterEntity findByPassword(String password) {
-        return null;
-    }
 
     @Override
     public RegisterEntity findEntityByEmail(String email) {

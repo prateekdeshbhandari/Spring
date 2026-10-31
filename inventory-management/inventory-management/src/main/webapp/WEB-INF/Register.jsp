@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -11,7 +12,6 @@
 
     <title>Inventory Management - Register</title>
 
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
           rel="stylesheet">
 
@@ -92,6 +92,11 @@
             color: white;
         }
 
+        .btn-register:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
         .error-text {
             color: #dc3545;
             font-size: 13px;
@@ -114,7 +119,8 @@
 
 <body>
 
-<!-- Navbar -->
+<!-- NAVBAR -->
+
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
 
@@ -172,22 +178,28 @@
 </nav>
 
 
-<!-- Registration Form -->
+<!-- REGISTRATION SECTION -->
+
 <main class="register-section">
 
     <div class="register-card">
 
         <div class="register-header">
+
             <h2>Create Your Account</h2>
+
             <p class="mb-0">
                 Register to access the Inventory Management System
             </p>
+
         </div>
 
         <div class="register-body">
 
-            <!-- Success Message -->
+            <!-- SUCCESS MESSAGE -->
+
             <c:if test="${not empty successMessage}">
+
                 <div class="alert alert-success alert-dismissible fade show"
                      role="alert">
 
@@ -198,18 +210,27 @@
                             data-bs-dismiss="alert"
                             aria-label="Close">
                     </button>
+
                 </div>
+
             </c:if>
 
-            <!-- Backend Error Message -->
+
+            <!-- BACKEND ERROR -->
+
             <c:if test="${not empty errorMessage}">
+
                 <div class="alert alert-danger" role="alert">
                     <c:out value="${errorMessage}"/>
                 </div>
+
             </c:if>
 
-            <!-- Validation Errors -->
+
+            <!-- VALIDATION ERRORS -->
+
             <c:if test="${not empty validationErrors}">
+
                 <div class="alert alert-danger" role="alert">
 
                     <strong>Please correct the following errors:</strong>
@@ -217,23 +238,29 @@
                     <ul class="mb-0 mt-2">
 
                         <c:forEach items="${validationErrors}" var="error">
+
                             <li>
                                 <c:out value="${error.defaultMessage}"/>
                             </li>
+
                         </c:forEach>
 
                     </ul>
+
                 </div>
+
             </c:if>
 
 
-            <!-- Registration Form -->
+            <!-- REGISTRATION FORM -->
+
             <form id="registerForm"
                   action="${pageContext.request.contextPath}/register"
                   method="post"
                   onsubmit="return validateForm(event)">
 
-                <!-- Name -->
+                <!-- NAME -->
+
                 <div class="mb-3">
 
                     <label for="name" class="form-label">
@@ -244,7 +271,7 @@
                            class="form-control"
                            id="name"
                            name="name"
-                           value="<c:out value='${RegisterDto.name}'/>"
+                           value="<c:out value='${registerDTO.name}'/>"
                            placeholder="Enter your full name">
 
                     <div id="nameError" class="error-text"></div>
@@ -252,7 +279,8 @@
                 </div>
 
 
-                <!-- Email -->
+                <!-- EMAIL -->
+
                 <div class="mb-3">
 
                     <label for="email" class="form-label">
@@ -263,16 +291,16 @@
                            class="form-control"
                            id="email"
                            name="email"
-                           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                           placeholder="example@email.com"
-                           onblur="checkEmailExit()">
+                           value="<c:out value='${registerDTO.email}'/>"
+                           placeholder="example@email.com">
 
                     <div id="EmailError" class="error-text"></div>
 
                 </div>
 
 
-                <!-- Password -->
+                <!-- PASSWORD -->
+
                 <div class="mb-3">
 
                     <label for="password" class="form-label">
@@ -290,7 +318,8 @@
                 </div>
 
 
-                <!-- Phone Number -->
+                <!-- PHONE NUMBER -->
+
                 <div class="mb-3">
 
                     <label for="phoneNumber" class="form-label">
@@ -300,17 +329,18 @@
                     <input type="tel"
                            class="form-control"
                            id="phoneNumber"
-                           name="phoneNumber"
+                           name="mobileNumber"
+                           value="<c:out value='${registerDTO.mobileNumber}'/>"
                            placeholder="Enter 10-digit phone number"
-                           maxlength="10"
-                           onblur="checkPhoneNumber()">
+                           maxlength="10">
 
                     <div id="PhoneError" class="error-text"></div>
 
                 </div>
 
 
-                <!-- Gender -->
+                <!-- GENDER -->
+
                 <div class="mb-3">
 
                     <label class="form-label d-block">
@@ -350,7 +380,8 @@
                 </div>
 
 
-                <!-- Address -->
+                <!-- ADDRESS -->
+
                 <div class="mb-4">
 
                     <label for="address" class="form-label">
@@ -361,14 +392,15 @@
                               id="address"
                               name="address"
                               rows="3"
-                              placeholder="Enter your full address"><c:out value="${RegisterDto.address}"/></textarea>
+                              placeholder="Enter your full address"><c:out value="${registerDTO.address}"/></textarea>
 
                     <div id="addressError" class="error-text"></div>
 
                 </div>
 
 
-                <!-- Submit Button -->
+                <!-- SUBMIT -->
+
                 <button type="submit"
                         id="registerButton"
                         class="btn btn-register w-100">
@@ -394,12 +426,14 @@
             </form>
 
         </div>
+
     </div>
 
 </main>
 
 
-<!-- Footer -->
+<!-- FOOTER -->
+
 <footer>
 
     <p>
@@ -414,15 +448,17 @@
 </footer>
 
 
-<!-- Bootstrap JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
 </script>
 
 
 <script>
 
-    // Check Email Duplicate
-    function checkEmailExit() {
+    // ======================================
+    // EMAIL DUPLICATE VALIDATION
+    // ======================================
+
+    async function checkEmailExit() {
 
         const emailId = document.getElementById("email").value.trim();
         const errorDiv = document.getElementById("EmailError");
@@ -430,47 +466,66 @@
         errorDiv.innerText = "";
 
         if (emailId === "") {
-            return Promise.resolve(false);
+            errorDiv.innerText = "Email cannot be empty";
+            errorDiv.style.color = "red";
+            return false;
         }
 
         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailId)) {
             errorDiv.innerText = "Enter a valid email address";
-            return Promise.resolve(false);
+            errorDiv.style.color = "red";
+            return false;
         }
 
-        return fetch(
-            "${pageContext.request.contextPath}/api/inventory/checkEmailExit/"
-            + encodeURIComponent(emailId)
-        )
-        .then(response => {
+        try {
+
+            const response = await fetch(
+                "${pageContext.request.contextPath}/api/inventory/checkEmailExit/"
+                + encodeURIComponent(emailId)
+            );
 
             if (!response.ok) {
-                throw new Error("Email checking failed");
+                throw new Error("Email checking failed: " + response.status);
             }
 
-            return response.text();
-        })
-        .then(message => {
+            const result = (await response.text()).trim().toLowerCase();
 
-            errorDiv.innerText = message.trim();
+            if (result === "true") {
 
-            return message.trim() !== "";
+                errorDiv.innerText = "Email is available";
+                errorDiv.style.color = "green";
 
-        })
-        .catch(error => {
+                return true;
+
+            } else if (result === "false") {
+
+                errorDiv.innerText = "Email already registered";
+                errorDiv.style.color = "red";
+
+                return false;
+
+            } else {
+
+                throw new Error("Invalid server response: " + result);
+            }
+
+        } catch (error) {
 
             console.error("Email check error:", error);
 
-            errorDiv.innerText =
-                "Unable to verify email. Please try again.";
+            errorDiv.innerText = "Unable to verify email. Please try again.";
+            errorDiv.style.color = "red";
 
-            return true;
-        });
+            return false;
+        }
     }
 
 
-    // Check Phone Number Duplicate
-    function checkPhoneNumber() {
+    // ======================================
+    // PHONE NUMBER DUPLICATE VALIDATION
+    // ======================================
+
+    async function checkPhoneNumber() {
 
         const phoneNumber =
             document.getElementById("phoneNumber").value.trim();
@@ -480,63 +535,86 @@
         errorDiv.innerText = "";
 
         if (phoneNumber === "") {
-            return Promise.resolve(false);
+
+            errorDiv.innerText = "Phone number cannot be empty";
+            errorDiv.style.color = "red";
+
+            return false;
         }
 
         if (!/^[6-9][0-9]{9}$/.test(phoneNumber)) {
 
-            errorDiv.innerText =
-                "Enter a valid 10-digit phone number";
+            errorDiv.innerText = "Enter a valid 10-digit phone number";
+            errorDiv.style.color = "red";
 
-            return Promise.resolve(false);
+            return false;
         }
 
-        return fetch(
-            "${pageContext.request.contextPath}/api/inventory/checkPhoneNumber/"
-            + encodeURIComponent(phoneNumber)
-        )
-        .then(response => {
+        try {
+
+            const response = await fetch(
+                "${pageContext.request.contextPath}/api/inventory/checkPhoneNumber/"
+                + encodeURIComponent(phoneNumber)
+            );
 
             if (!response.ok) {
-                throw new Error("Phone number checking failed");
+                throw new Error("Phone checking failed: " + response.status);
             }
 
-            return response.text();
-        })
-        .then(message => {
+            const result = (await response.text()).trim().toLowerCase();
 
-            errorDiv.innerText = message.trim();
+            if (result === "true") {
 
-            return message.trim() !== "";
+                errorDiv.innerText = "Phone number is available";
+                errorDiv.style.color = "green";
 
-        })
-        .catch(error => {
+                return true;
+
+            } else if (result === "false") {
+
+                errorDiv.innerText = "Phone number already registered";
+                errorDiv.style.color = "red";
+
+                return false;
+
+            } else {
+
+                throw new Error("Invalid server response: " + result);
+            }
+
+        } catch (error) {
 
             console.error("Phone check error:", error);
 
             errorDiv.innerText =
                 "Unable to verify phone number. Please try again.";
 
-            return true;
-        });
+            errorDiv.style.color = "red";
+
+            return false;
+        }
     }
 
 
-    // Frontend Form Validation
+    // ======================================
+    // FORM VALIDATION
+    // ======================================
+
+    let registrationSubmitting = false;
+
     async function validateForm(event) {
 
         event.preventDefault();
 
+        if (registrationSubmitting) {
+            return false;
+        }
+
         let isValid = true;
 
-        const name =
-            document.getElementById("name").value.trim();
-
-        const email =
-            document.getElementById("email").value.trim();
-
-        const password =
-            document.getElementById("password").value;
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
 
         const phoneNumber =
             document.getElementById("phoneNumber").value.trim();
@@ -548,7 +626,8 @@
             document.querySelector('input[name="gender"]:checked');
 
 
-        // Clear Previous Errors
+        // CLEAR PREVIOUS ERRORS
+
         document.getElementById("nameError").innerText = "";
         document.getElementById("EmailError").innerText = "";
         document.getElementById("passwordError").innerText = "";
@@ -557,7 +636,8 @@
         document.getElementById("addressError").innerText = "";
 
 
-        // Name Validation
+        // NAME VALIDATION
+
         if (name === "") {
 
             document.getElementById("nameError").innerText =
@@ -574,7 +654,8 @@
         }
 
 
-        // Email Validation
+        // EMAIL VALIDATION
+
         if (email === "") {
 
             document.getElementById("EmailError").innerText =
@@ -591,7 +672,8 @@
         }
 
 
-        // Password Validation
+        // PASSWORD VALIDATION
+
         if (password === "") {
 
             document.getElementById("passwordError").innerText =
@@ -608,8 +690,16 @@
         }
 
 
-        // Phone Validation
-        if (!/^[6-9][0-9]{9}$/.test(phoneNumber)) {
+        // PHONE VALIDATION
+
+        if (phoneNumber === "") {
+
+            document.getElementById("PhoneError").innerText =
+                "Phone number cannot be empty";
+
+            isValid = false;
+
+        } else if (!/^[6-9][0-9]{9}$/.test(phoneNumber)) {
 
             document.getElementById("PhoneError").innerText =
                 "Enter a valid 10-digit phone number";
@@ -618,7 +708,8 @@
         }
 
 
-        // Gender Validation
+        // GENDER VALIDATION
+
         if (gender === null) {
 
             document.getElementById("genderError").innerText =
@@ -628,7 +719,8 @@
         }
 
 
-        // Address Validation
+        // ADDRESS VALIDATION
+
         if (address.length < 5) {
 
             document.getElementById("addressError").innerText =
@@ -643,21 +735,32 @@
         }
 
 
-        // Check Duplicate Email and Phone
-        const emailExists = await checkEmailExit();
-        const phoneExists = await checkPhoneNumber();
+        // CHECK EMAIL AND PHONE AVAILABILITY
 
-        if (emailExists || phoneExists) {
+        const [emailAvailable, phoneAvailable] = await Promise.all([
+            checkEmailExit(),
+            checkPhoneNumber()
+        ]);
+
+
+        if (!emailAvailable || !phoneAvailable) {
             return false;
         }
 
 
-        // Submit Form
-        document.getElementById("registerButton").disabled = true;
+        // SUBMIT FORM
+
+        const registerButton =
+            document.getElementById("registerButton");
+
+        registrationSubmitting = true;
+
+        registerButton.disabled = true;
+        registerButton.innerText = "Registering...";
 
         document.getElementById("registerForm").submit();
 
-        return true;
+        return false;
     }
 
 </script>

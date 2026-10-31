@@ -15,18 +15,21 @@ public class RegisterRestController {
     @ResponseBody
     public String checkEmailExit(@PathVariable("email") String email) {
         System.out.println("Controller email: [" + email + "]");
-        return service.findEmail(email);
+
+        boolean exists = Boolean.parseBoolean(service.findEmail(email));
+
+        return exists ? "false" : "true";
     }
 
     @GetMapping("/checkPhoneNumber/{phoneNumber:.+}")
     @ResponseBody
     public String checkPhoneNumber(@PathVariable("phoneNumber") String phoneNumber) {
 
-        System.out.println("Invoking checkPhoneNumber: " + phoneNumber);
 
-        return service.findPhoneNumber(phoneNumber);
+        boolean exists = Boolean.parseBoolean(service.findPhoneNumber(phoneNumber));
+
+        return exists ? "false" : "true";
     }
-
 
 
 }

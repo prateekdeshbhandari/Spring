@@ -29,10 +29,10 @@ import javax.validation.constraints.Size;
         @Size(min = 6,max = 25, message = "Password must be at least 8 characters")
         private String password;
 
-        @NotBlank(message = "Mobile number is required")
-        @Pattern(regexp = "^[0-9]{10}$",
-                message = "Mobile number must contain 10 digits")
-        private String mobileNumber;
+    @NotBlank(message = "Mobile number is required")
+    @Pattern(regexp = "^[6-9][0-9]{9}$",
+            message = "Enter a valid 10-digit mobile number")
+    private String mobileNumber;
 
         @NotBlank(message = "Address is required")
         private String address;
@@ -40,7 +40,7 @@ import javax.validation.constraints.Size;
 @Size(min = 1, max = 10, message = "Gender must be between 1 and 10 characters")
        private String gender;
 
-    private String role;
+
 
 
     }

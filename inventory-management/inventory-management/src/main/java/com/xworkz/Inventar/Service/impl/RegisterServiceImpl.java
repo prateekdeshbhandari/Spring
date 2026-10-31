@@ -60,9 +60,11 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public String findEmail(String email) {
-        System.out.println("Running findEmail() in RegisterServiceImpl");
-boolean exist=registerRepository.emailExists(email);
-        return exist ? "Email Id Already Exist" : "Email Id not Exist";
+        System.out.println("Service received: [" + email + "]");
+
+        Boolean exists = registerRepository.emailExists(email);
+
+        return exists ? "Email Id Already Exist" : "Email Id not Exist";
     }
 
     @Override
@@ -89,7 +91,7 @@ boolean exist=registerRepository.emailExists(email);
             return null;
         }
 
-        RegisterEntity entity = registerRepository.findByEmail(dto.getEmail());
+        RegisterEntity entity = registerRepository.findEntityByEmail(dto.getEmail());
 
         if (entity == null) {
             System.out.println("Email not found in database");

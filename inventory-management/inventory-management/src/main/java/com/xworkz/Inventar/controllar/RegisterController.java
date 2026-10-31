@@ -69,7 +69,7 @@ public class RegisterController {
         model.addAttribute("msg", "Login Failed. Please check your email and password.");
         model.addAttribute("loginDto", loginDto);
 
-        return "login";
+        return "Login";
     }
     @GetMapping("/edit")
     public String editProfile(@RequestParam("email") String email, Model model) {
@@ -78,7 +78,7 @@ public class RegisterController {
 
         if (dto == null) {
             model.addAttribute("msg", "User not found");
-            return "login";
+            return "editProfile";
         }
 
         model.addAttribute("registerDto", dto);
