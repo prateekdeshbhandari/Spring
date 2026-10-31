@@ -19,28 +19,44 @@ public class RegisterServiceImpl implements RegisterService {
     private BCryptPasswordEncoder bcryptPasswordEncoder;
 
     @Override
-    public boolean registerService(RegisterDTO dto) {
+    public String registerService(RegisterDTO dto) {
         System.out.println("Running save() in RegisterServiceImpl");
         System.out.println("RegisterDTO: " + dto);
-        if(dto!=null){
-            System.out.println("RegisterDTO is not null, saving...");
-            try {
-                RegisterEntity registerEntity=new RegisterEntity();
-                BeanUtils.copyProperties(dto, registerEntity);
-                String encodedPassword = bcryptPasswordEncoder.encode(dto.getPassword());
-                registerEntity.setPassword(encodedPassword);
-                System.out.println("RegisterEntity: " + registerEntity);
-                this.registerRepository.rejestarRefo(registerEntity);
-                System.out.println("Entity persisted successfully");
-                return true;
-            } catch (Exception e) {
-                System.out.println("Error saving registration: " + e.getMessage());
-                e.printStackTrace();
-                return false;
-            }
+
+        System.out.println("Running save() in RegisterServiceImpl");
+        System.out.println("RegisterDTO: " + dto);
+
+        if (dto == null) {
+            return "Invalid registration details";
         }
-        return false;
+
+        System.out.println("Saving RegisterDTO");
+
+        // Check email
+        if (registerRepository.emailExists(dto.getEmail())) {
+            System.out.println("Email Id Already Exist");
+            return "Email Id Already Exist";
+        }
+
+        // Check phone number
+        if (registerRepository.phoneNumberExists(dto.getMobileNumber())) {
+            System.out.println("Phone Number Already Exist");
+            return "Phone Number Already Exist";
+        }
+
+        RegisterEntity registerEntity = new RegisterEntity();
+
+        String encodedPassword = bcryptPasswordEncoder.encode(dto.getPassword());
+
+        dto.setPassword(encodedPassword);
+        BeanUtils.copyProperties(dto, registerEntity);
+
+       registerRepository.rejestarRefo(registerEntity);
+        System.out.println("Registration successful");
+
+        return "Registration Successful";
     }
+
 
     @Override
     public String findEmail(String email) {
@@ -94,5 +110,45 @@ boolean exist=registerRepository.emailExists(email);
 
         System.out.println("Password does not match");
         return null;
+    }
+
+
+
+    @Override
+    public boolean updateProfile(RegisterDTO registerDTO) {
+
+        if (registerDTO == null || registerDTO.getEmail() == null) {
+            return false;
+        }
+
+        RegisterEntity entity = registerRepository.findEntityByEmail(registerDTO.getEmail());
+
+        if (entity == null) {
+            return false;
+        }
+
+        entity.setName(registerDTO.getName());
+        entity.setMobileNumber(registerDTO.getMobileNumber());
+        entity.setAddress(registerDTO.getAddress());
+
+        registerRepository.update(entity);
+
+        return true;
+    }
+
+    @Override
+    public RegisterDTO findUserByEmail(String email) {
+
+        RegisterEntity entity = registerRepository.findEntityByEmail(email);
+
+        if (entity == null) {
+            return null;
+        }
+
+        RegisterDTO dto = new RegisterDTO();
+        BeanUtils.copyProperties(entity, dto);
+        dto.setPassword(null);
+
+        return dto;
     }
 }

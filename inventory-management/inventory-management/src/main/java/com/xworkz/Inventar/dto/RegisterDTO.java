@@ -40,6 +40,8 @@ import javax.validation.constraints.Size;
 @Size(min = 1, max = 10, message = "Gender must be between 1 and 10 characters")
        private String gender;
 
+    private String role;
+
 
     }
 

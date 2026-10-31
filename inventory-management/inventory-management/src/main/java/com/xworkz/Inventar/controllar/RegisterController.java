@@ -9,10 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -26,42 +23,31 @@ public class RegisterController {
     public RegisterController(){
         System.out.println("Created RegisterController...");
     }
-    @GetMapping
+    @GetMapping()
     public String onLoadRegister(Model model){
         System.out.println("Running onLoadRegister in RegisterController...");
         model.addAttribute("registerDTO", new RegisterDTO());
         return "Register";
     }
 
-  @PostMapping
-    public String onRegister(@Valid @ModelAttribute("registerDTO") RegisterDTO registerDTO, BindingResult bindingResult, Model model) {
-      System.out.println("Running onRegister in RegisterController...");
-try {
-    if (bindingResult.hasErrors()) {
-        System.out.println("Validation failed:");
-        List<ObjectError> error = bindingResult.getAllErrors();
-        model.addAttribute("error", error);
+    @PostMapping()
+    public String saveRegisterForm(@ModelAttribute @Valid RegisterDTO registerDTO, Model model) {
 
-    } else {
-        boolean saved = this.registerService.registerService(registerDTO);
-        if (saved) {
-            model.addAttribute("successMessage", "Register details saved successfully");
+        System.out.println("Running saveRegisterForm()");
+        System.out.println("RegisterDTO: " + registerDTO);
+
+        String message = registerService.registerService(registerDTO);
+
+        if ("Registration Successful".equals(message)) {
+            model.addAttribute("successMessage", message);
             model.addAttribute("RegisterDto", new RegisterDTO());
         } else {
-            model.addAttribute("error", "Failed to save registration details");
+            model.addAttribute("errorMessage", message);
+            model.addAttribute("RegisterDto", registerDTO);
         }
 
+        return "Register";
     }
-    return "Register";
-}catch (RuntimeException e){
-    model.addAttribute("errorMessage", e.getMessage());
-    model.addAttribute("registerDTO", registerDTO);
-
-    System.out.println("Exception occurred: " + e.getMessage());
-    return "Register";
-}
-
-  }
 
     @GetMapping("/login")
     public String onLoadLogin(Model model){
@@ -70,18 +56,56 @@ try {
         return "Login";
     }
     @PostMapping("/login")
-    public String onLogin(@Valid LoginDto loginDTO, BindingResult bindingResult, Model model){
-        System.out.println("Running onLogin in RegisterController...");
-        if(bindingResult.hasErrors()){
-            System.out.println("Validation failed:");
-            List<ObjectError> error = bindingResult.getAllErrors();
-            model.addAttribute("error", error);
-        } else {
-            this.registerService.loginService(loginDTO);
-            model.addAttribute("successMessage", "Login details saved successfully");
-            model.addAttribute("loginDTO", new RegisterDTO());
+    public String login(LoginDto loginDto, Model model) {
+        System.out.println("Login method is called: " + loginDto);
+        RegisterDTO dto = registerService.loginService(loginDto);
+        System.out.println("DTO: " + dto);
+
+        if (dto != null) {
+            model.addAttribute("registerDto", dto);
+            return "dashboard";
         }
-        return "Login";
+
+        model.addAttribute("msg", "Login Failed. Please check your email and password.");
+        model.addAttribute("loginDto", loginDto);
+
+        return "login";
+    }
+    @GetMapping("/edit")
+    public String editProfile(@RequestParam("email") String email, Model model) {
+        System.out.println("Edit method is called: " + email);
+        RegisterDTO dto = registerService.findUserByEmail(email);
+
+        if (dto == null) {
+            model.addAttribute("msg", "User not found");
+            return "login";
+        }
+
+        model.addAttribute("registerDto", dto);
+        return "editProfile";
+    }
+
+    @PostMapping("/update")
+    public String updateProfile(
+            @ModelAttribute RegisterDTO registerDTO,
+            Model model) {
+
+        System.out.println("Update method is called: " + registerDTO);
+
+        boolean updated = registerService.updateProfile(registerDTO);
+
+        if (updated) {
+            RegisterDTO dto =
+                    registerService.findUserByEmail(registerDTO.getEmail());
+
+            model.addAttribute("registerDto", dto);
+            return "dashboard";
+        }
+
+        model.addAttribute("registerDto", registerDTO);
+        model.addAttribute("msg", "Profile update failed");
+
+        return "editProfile";
     }
 }
 

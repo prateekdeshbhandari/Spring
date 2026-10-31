@@ -8,5 +8,7 @@ public interface RegisterRepository {
    boolean emailExists(String email);
    boolean phoneNumberExists(String phoneNumber);
    RegisterEntity findByPassword( String password);
+   RegisterEntity findEntityByEmail(String email);
+   void update(RegisterEntity entity);
 
 }

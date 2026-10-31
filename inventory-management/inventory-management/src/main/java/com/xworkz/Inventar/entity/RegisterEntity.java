@@ -39,6 +39,9 @@ public class RegisterEntity {
         @Column(name = "gender")
         private String gender;
 
+        @Column(name = "role")
+        private String role;
+
     @OneToOne(mappedBy = "register", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private AuditEntity auditEntity;
     }
