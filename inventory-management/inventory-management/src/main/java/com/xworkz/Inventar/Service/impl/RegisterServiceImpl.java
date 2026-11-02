@@ -1,5 +1,6 @@
 package com.xworkz.Inventar.Service.impl;
 
+import com.xworkz.Inventar.Service.EmailService;
 import com.xworkz.Inventar.Service.RegisterService;
 import com.xworkz.Inventar.dto.LoginDto;
 import com.xworkz.Inventar.dto.RegisterDTO;
@@ -17,6 +18,9 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Autowired
     private BCryptPasswordEncoder bcryptPasswordEncoder;
+    @Autowired
+    private EmailService emailService;
+
 
     @Override
     public String registerService(RegisterDTO dto) {
@@ -139,6 +143,19 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
+    public void sendEmail(String email) {
+        System.out.println("Running sendEmail() in RegisterServiceImpl");
+        if(email!=null){
+            String otp = String.valueOf((int) (Math.random() * 900000) + 100000);
+
+            System.out.println("OTP: " + otp);
+            emailService.sendEmail(email, otp);
+            System.out.println("Email sent successfully");
+
+        }
+    }
+
+    @Override
     public RegisterDTO findUserByEmail(String email) {
 
         RegisterEntity entity = registerRepository.findEntityByEmail(email);
@@ -150,7 +167,6 @@ public class RegisterServiceImpl implements RegisterService {
         RegisterDTO dto = new RegisterDTO();
         BeanUtils.copyProperties(entity, dto);
         dto.setPassword(null);
-
         return dto;
     }
 }

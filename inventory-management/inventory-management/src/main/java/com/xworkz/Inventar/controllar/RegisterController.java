@@ -107,6 +107,24 @@ public class RegisterController {
 
         return "editProfile";
     }
+    @GetMapping("/userLogin")
+    public String sendEmail() {
+        System.out.println("Send email method is called");
+        return "userLogin";
+    }
+    @PostMapping("/userLogin")
+    public String sendEmail(@ModelAttribute LoginDto loginDto, Model model) {
+        System.out.println("Send email method is called");
+        model.addAttribute("email", loginDto.getEmail());
+        model.addAttribute("otp succsesfull", "otp");
+        registerService.sendEmail(loginDto.getEmail());
+        return "otpLogin";
+    }
+    @PostMapping("/verifyOtp")
+    public String verifyOtp(@ModelAttribute LoginDto loginDto, Model model) {
+        System.out.println("Verify OTP method is called");
+        return "userLogin";
+    }
 }
 
 

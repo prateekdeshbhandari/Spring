@@ -289,6 +289,12 @@
                         Login
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="${pageContext.request.contextPath}/register/userLogin">
+                        User
+                    </a>
+                </li>
 
             </ul>
         </div>
