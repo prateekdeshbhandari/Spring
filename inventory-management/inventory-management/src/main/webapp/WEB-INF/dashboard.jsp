@@ -8,6 +8,8 @@
     <meta charset="UTF-8">
     <title>Inventory Management - Dashboard</title>
 
+
+
     <style>
         body {
             margin: 0;
@@ -118,6 +120,13 @@
         </div>
 
         <div class="detail-row">
+            <div class="label">Password</div>
+            <div class="value">
+                <c:out value="${registerDto.password}" />
+            </div>
+        </div>
+
+        <div class="detail-row">
             <div class="label">Phone Number</div>
             <div class="value">
                 <c:out value="${registerDto.mobileNumber}" />
@@ -132,14 +141,23 @@
         </div>
 
     </div>
+        <div class="detail-row">
+            <div class="label">Gendar</div>
+            <div class="value">
+                <c:out value="${registerDto.gender}" />
+            </div>
+        </div>
+
+    </div>
 
     <div class="footer">
         Inventory Management System
     </div>
 
-    <a href="${pageContext.request.contextPath}/register/edit?email=${registerDto.email}">
+   <a href="${pageContext.request.contextPath}/register/edit?email=${registerDto.email}">
         Edit Profile
     </a>
+
 
 </div>
 

@@ -4,6 +4,7 @@ import com.xworkz.Inventar.entity.AuditEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.CascadeType;
 import javax.persistence.OneToOne;
@@ -41,6 +42,9 @@ import javax.validation.constraints.Size;
        private String gender;
 
 
+    private MultipartFile file;
+
+    private String profileImage;
 
 
     }

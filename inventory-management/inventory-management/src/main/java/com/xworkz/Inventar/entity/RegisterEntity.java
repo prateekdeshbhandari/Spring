@@ -40,7 +40,9 @@ public class RegisterEntity {
         private String gender;
 
 
-    @OneToOne(mappedBy = "register", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "register", cascade = CascadeType.ALL)
     private AuditEntity auditEntity;
+    @Column(name = "profile_image")
+    private String profileImage;
     }
 

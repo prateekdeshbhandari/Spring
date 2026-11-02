@@ -63,6 +63,8 @@ public class RegisterController {
 
         if (dto != null) {
             model.addAttribute("registerDto", dto);
+
+
             return "dashboard";
         }
 

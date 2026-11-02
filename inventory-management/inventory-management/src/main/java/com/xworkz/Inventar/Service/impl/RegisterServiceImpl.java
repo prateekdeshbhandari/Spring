@@ -110,7 +110,7 @@ public class RegisterServiceImpl implements RegisterService {
 
         if (matched) {
             RegisterDTO dto1 = new RegisterDTO();
-            BeanUtils.copyProperties(entity, dto);
+            BeanUtils.copyProperties(entity, dto1);
             return dto1;
         }
 
