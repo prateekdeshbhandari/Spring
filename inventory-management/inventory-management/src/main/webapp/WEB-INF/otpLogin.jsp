@@ -121,7 +121,7 @@
     <div class="text-center mt-4">
         <p class="text-secondary mb-1">Didn't receive the OTP?</p>
 
-        <form action="sendOtp" method="post">
+        <form action="resendOtp" method="post">
             <input type="hidden"
                    name="email"
                    value="<%= request.getAttribute("email") != null

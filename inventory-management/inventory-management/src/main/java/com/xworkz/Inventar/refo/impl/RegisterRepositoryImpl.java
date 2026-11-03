@@ -6,15 +6,16 @@ import com.xworkz.Inventar.refo.RegisterRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
 @Transactional
 public class RegisterRepositoryImpl implements RegisterRepository {
+    @PersistenceUnit
+    private EntityManagerFactory emf;
+
     @PersistenceContext
     private EntityManager entityManager;
     @Override
@@ -112,6 +113,30 @@ public class RegisterRepositoryImpl implements RegisterRepository {
             entityManager.persist(auditEntity);
         }
 
+    }
+
+    @Override
+    public boolean saveOtp(String email, String otp) {
+        EntityManager entityManager =emf.createEntityManager();
+
+        EntityTransaction transaction=entityManager.getTransaction();
+        try {
+            transaction.begin();
+            int result= entityManager.createNamedQuery("updatingOtpByEmail").setParameter("otp",otp).setParameter("email",email).executeUpdate();
+            transaction.commit();
+            if(result>0){
+                return true;
+            }
+
+        } catch (PersistenceException e) {
+            transaction.rollback();
+
+        }
+        finally {
+            entityManager.close();
+        }
+
+        return false;
     }
 }
 

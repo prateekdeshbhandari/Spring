@@ -143,16 +143,43 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    public void sendEmail(String email) {
+    public boolean sendEmail(String email) {
         System.out.println("Running sendEmail() in RegisterServiceImpl");
-        if(email!=null){
+        boolean isCheck=registerRepository.emailExists(email);
+
+        if(isCheck){
             String otp = String.valueOf((int) (Math.random() * 900000) + 100000);
 
             System.out.println("OTP: " + otp);
-            emailService.sendEmail(email, otp);
-            System.out.println("Email sent successfully");
+          boolean isSend=  emailService.sendEmail(email, otp);
 
+            if(isSend){
+                System.out.println("OTP sent successfully");
+                boolean isSaved=registerRepository.saveOtp(email,otp);
+                System.out.println("OTP saved successfully");
+                if(isSaved){
+                    return true;                 }
+            }else{
+                return false;
+            }
+
+            System.out.println("Email sent successfully");
         }
+        return false;
+    }
+
+    @Override
+    public RegisterDTO verifyOtp(String email, String otp) {
+        System.out.println("Running verifyOtp() in RegisterServiceImpl");
+        RegisterDTO registerDTO=null;
+        if(email!=null && otp!=null){
+            RegisterEntity entity = registerRepository.findEntityByEmail(email);
+            if(entity!=null && entity.getOtp().equals(otp)){
+                registerDTO = new RegisterDTO();
+                BeanUtils.copyProperties(entity, registerDTO);
+            }
+        }
+        return registerDTO;
     }
 
     @Override

@@ -13,6 +13,7 @@ import javax.persistence.*;
 @Table(name = "register_details")
 @NamedQuery(name = "getEmailId", query = "SELECT e FROM RegisterEntity e WHERE e.email = :email")
 @NamedQuery(name = "findpno", query = "SELECT e FROM RegisterEntity e WHERE e.mobileNumber = :phoneNumber")
+@NamedQuery(name = "updatingOtpByEmail", query = "UPDATE RegisterEntity e SET e.otp = :otp WHERE e.email = :email")
 
 public class RegisterEntity {
 
@@ -44,5 +45,7 @@ public class RegisterEntity {
     private AuditEntity auditEntity;
     @Column(name = "profile_image")
     private String profileImage;
+    @Column(name = "otp")
+    private String otp;
     }
 

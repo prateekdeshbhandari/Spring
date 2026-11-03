@@ -10,5 +10,6 @@ public interface RegisterRepository {
 
    RegisterEntity findEntityByEmail(String email);
    void update(RegisterEntity entity);
+   boolean saveOtp(String email, String otp);
 
 }

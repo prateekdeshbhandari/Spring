@@ -10,7 +10,8 @@ public interface RegisterService {
     RegisterDTO loginService(LoginDto dto);
     RegisterDTO findUserByEmail(String email);
     boolean updateProfile(RegisterDTO registerDTO);
-    void sendEmail(String email);
+    boolean sendEmail(String email);
+    RegisterDTO verifyOtp(String email, String otp);
 
 
 }

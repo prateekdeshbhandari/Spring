@@ -123,10 +123,24 @@ public class RegisterController {
         return "otpLogin";
     }
     @PostMapping("/verifyOtp")
-    public String verifyOtp(@ModelAttribute LoginDto loginDto, Model model) {
+    public String verifyOtp(@ModelAttribute RegisterDTO registerDTO, Model model) {
         System.out.println("Verify OTP method is called");
-        return "userLogin";
+        RegisterDTO dto =
+                registerService.findUserByEmail(registerDTO.getEmail());
+
+        model.addAttribute("registerDto", dto);
+        return "dashboard";
     }
+
+        @PostMapping("resendOtp")
+                public String resendOtp(@ModelAttribute LoginDto dto, Model model) {
+            System.out.println("Resend OTP method is called");
+            model.addAttribute("registerDto", dto);
+            registerService.sendEmail(dto.getEmail());
+            return "otpLogin";
+        }
+
+
 }
 
 
