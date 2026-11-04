@@ -6,12 +6,14 @@ import com.xworkz.Inventar.dto.LoginDto;
 import com.xworkz.Inventar.dto.RegisterDTO;
 import com.xworkz.Inventar.entity.RegisterEntity;
 import com.xworkz.Inventar.refo.RegisterRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class RegisterServiceImpl implements RegisterService {
     @Autowired
     private RegisterRepository registerRepository;
@@ -24,27 +26,27 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public String registerService(RegisterDTO dto) {
-        System.out.println("Running save() in RegisterServiceImpl");
-        System.out.println("RegisterDTO: " + dto);
+        log.info("Running save() in RegisterServiceImpl");
+        log.info("RegisterDTO: " + dto);
 
-        System.out.println("Running save() in RegisterServiceImpl");
-        System.out.println("RegisterDTO: " + dto);
+        log.info("Running save() in RegisterServiceImpl");
+        log.info("RegisterDTO: " + dto);
 
         if (dto == null) {
             return "Invalid registration details";
         }
 
-        System.out.println("Saving RegisterDTO");
+        log.info("Saving RegisterDTO");
 
         // Check email
         if (registerRepository.emailExists(dto.getEmail())) {
-            System.out.println("Email Id Already Exist");
+            log.info("Email Id Already Exist");
             return "Email Id Already Exist";
         }
 
         // Check phone number
         if (registerRepository.phoneNumberExists(dto.getMobileNumber())) {
-            System.out.println("Phone Number Already Exist");
+            log.info("Phone Number Already Exist");
             return "Phone Number Already Exist";
         }
 
@@ -56,7 +58,7 @@ public class RegisterServiceImpl implements RegisterService {
         BeanUtils.copyProperties(dto, registerEntity);
 
        registerRepository.rejestarRefo(registerEntity);
-        System.out.println("Registration successful");
+        log.info("Registration successful");
 
         return "Registration Successful";
     }
@@ -64,7 +66,7 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public String findEmail(String email) {
-        System.out.println("Service received: [" + email + "]");
+        log.info("Service received: [" + email + "]");
 
         Boolean exists = registerRepository.emailExists(email);
 
@@ -74,7 +76,7 @@ public class RegisterServiceImpl implements RegisterService {
     @Override
     public String findPhoneNumber(String phoneNumber) {
 
-        System.out.println("Invoking findPhoneNumber:Service " + phoneNumber);
+        log.info("Invoking findPhoneNumber:Service " + phoneNumber);
         String status = null;
 
         if (phoneNumber != null) {
@@ -88,8 +90,8 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public RegisterDTO loginService(LoginDto dto) {
-        System.out.println("Running loginService() in RegisterServiceImpl");
-        System.out.println("Running checkUserByLogin()");
+        log.info("Running loginService() in RegisterServiceImpl");
+        log.info("Running checkUserByLogin()");
 
         if (dto == null) {
             return null;
@@ -98,7 +100,7 @@ public class RegisterServiceImpl implements RegisterService {
         RegisterEntity entity = registerRepository.findEntityByEmail(dto.getEmail());
 
         if (entity == null) {
-            System.out.println("Email not found in database");
+            log.info("Email not found in database");
             return null;
         }
 
@@ -144,33 +146,33 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public boolean sendEmail(String email) {
-        System.out.println("Running sendEmail() in RegisterServiceImpl");
+        log.info("Running sendEmail() in RegisterServiceImpl");
         boolean isCheck=registerRepository.emailExists(email);
 
         if(isCheck){
             String otp = String.valueOf((int) (Math.random() * 900000) + 100000);
 
-            System.out.println("OTP: " + otp);
+            log.info("OTP: " + otp);
           boolean isSend=  emailService.sendEmail(email, otp);
 
             if(isSend){
-                System.out.println("OTP sent successfully");
+                log.info("OTP sent successfully");
                 boolean isSaved=registerRepository.saveOtp(email,otp);
-                System.out.println("OTP saved successfully");
+                log.info("OTP saved successfully");
                 if(isSaved){
                     return true;                 }
             }else{
                 return false;
             }
 
-            System.out.println("Email sent successfully");
+            log.info("Email sent successfully");
         }
         return false;
     }
 
     @Override
     public RegisterDTO verifyOtp(String email, String otp) {
-        System.out.println("Running verifyOtp() in RegisterServiceImpl");
+        log.info("Running verifyOtp() in RegisterServiceImpl");
         RegisterDTO registerDTO=null;
         if(email!=null && otp!=null){
             RegisterEntity entity = registerRepository.findEntityByEmail(email);

@@ -1,5 +1,6 @@
 package com.xworkz.Inventar.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.core.env.Environment;
@@ -20,6 +21,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
+@Slf4j
 @PropertySource("classpath:application.properties")
 public class ApplictionDataConfig {
 

@@ -96,6 +96,10 @@
     </div>
 
     <form action="verifyOtp" method="post">
+        <input type="hidden"
+               name="email"
+               value="<%= request.getAttribute("email") != null
+            ? request.getAttribute("email") : "" %>">
 
         <div class="mb-4">
             <label class="form-label fw-semibold">Enter OTP</label>

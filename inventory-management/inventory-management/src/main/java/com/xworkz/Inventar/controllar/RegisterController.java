@@ -3,6 +3,7 @@ package com.xworkz.Inventar.controllar;
 import com.xworkz.Inventar.Service.RegisterService;
 import com.xworkz.Inventar.dto.LoginDto;
 import com.xworkz.Inventar.dto.RegisterDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/register")
+@Slf4j
 public class RegisterController {
     @Autowired
     private RegisterService registerService;
@@ -25,7 +27,7 @@ public class RegisterController {
     }
     @GetMapping()
     public String onLoadRegister(Model model){
-        System.out.println("Running onLoadRegister in RegisterController...");
+        log.info("Running onLoadRegister in RegisterController...");
         model.addAttribute("registerDTO", new RegisterDTO());
         return "Register";
     }
@@ -33,8 +35,8 @@ public class RegisterController {
     @PostMapping()
     public String saveRegisterForm(@ModelAttribute @Valid RegisterDTO registerDTO, Model model) {
 
-        System.out.println("Running saveRegisterForm()");
-        System.out.println("RegisterDTO: " + registerDTO);
+        log.info("Running saveRegisterForm()");
+        log.info("RegisterDTO: " + registerDTO);
 
         String message = registerService.registerService(registerDTO);
 
@@ -51,15 +53,15 @@ public class RegisterController {
 
     @GetMapping("/login")
     public String onLoadLogin(Model model){
-        System.out.println("Running onLoadLogin in RegisterController...");
+        log.info("Running onLoadLogin in RegisterController...");
         model.addAttribute("loginDTO", new RegisterDTO());
         return "Login";
     }
     @PostMapping("/login")
     public String login(LoginDto loginDto, Model model) {
-        System.out.println("Login method is called: " + loginDto);
+        log.info("Login method is called: " + loginDto);
         RegisterDTO dto = registerService.loginService(loginDto);
-        System.out.println("DTO: " + dto);
+        log.info("DTO: " + dto);
 
         if (dto != null) {
             model.addAttribute("registerDto", dto);
@@ -75,7 +77,7 @@ public class RegisterController {
     }
     @GetMapping("/edit")
     public String editProfile(@RequestParam("email") String email, Model model) {
-        System.out.println("Edit method is called: " + email);
+        log.info("Edit method is called: " + email);
         RegisterDTO dto = registerService.findUserByEmail(email);
 
         if (dto == null) {
@@ -92,7 +94,7 @@ public class RegisterController {
             @ModelAttribute RegisterDTO registerDTO,
             Model model) {
 
-        System.out.println("Update method is called: " + registerDTO);
+        log.info("Update method is called: " + registerDTO);
 
         boolean updated = registerService.updateProfile(registerDTO);
 
@@ -111,36 +113,41 @@ public class RegisterController {
     }
     @GetMapping("/userLogin")
     public String sendEmail() {
-        System.out.println("Send email method is called");
+        log.info("Send email method is called");
         return "userLogin";
     }
     @PostMapping("/userLogin")
     public String sendEmail(@ModelAttribute LoginDto loginDto, Model model) {
-        System.out.println("Send email method is called");
+        log.info("Send email method is called");
         model.addAttribute("email", loginDto.getEmail());
         model.addAttribute("otp succsesfull", "otp");
         registerService.sendEmail(loginDto.getEmail());
         return "otpLogin";
     }
     @PostMapping("/verifyOtp")
-    public String verifyOtp(@ModelAttribute RegisterDTO registerDTO, Model model) {
-        System.out.println("Verify OTP method is called");
-        RegisterDTO dto =
-                registerService.findUserByEmail(registerDTO.getEmail());
-
-        model.addAttribute("registerDto", dto);
-        return "dashboard";
+    public String verifyOtp(@RequestParam String email, @RequestParam String otp, Model model) {
+        log.info("Verify OTP method is called");
+        log.info("Email: " + email + ", OTP: " + otp);
+        
+        RegisterDTO dto = registerService.verifyOtp(email, otp);
+        
+        if (dto != null) {
+            model.addAttribute("registerDto", dto);
+            return "dashboard";
+        } else {
+            model.addAttribute("error", "Invalid OTP");
+            model.addAttribute("email", email);
+            return "otpLogin";
+        }
     }
 
         @PostMapping("resendOtp")
                 public String resendOtp(@ModelAttribute LoginDto dto, Model model) {
-            System.out.println("Resend OTP method is called");
+            log.info("Resend OTP method is called");
             model.addAttribute("registerDto", dto);
             registerService.sendEmail(dto.getEmail());
             return "otpLogin";
         }
-
-
 }
 
 

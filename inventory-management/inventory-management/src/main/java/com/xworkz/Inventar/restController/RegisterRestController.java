@@ -2,8 +2,9 @@ package com.xworkz.Inventar.restController;
 
 import com.xworkz.Inventar.Service.RegisterService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-
+@Slf4j
 @RestController
 @RequestMapping("/api/inventory")
 @AllArgsConstructor
@@ -14,7 +15,7 @@ public class RegisterRestController {
     @GetMapping("/checkEmailExit/{email:.+}")
     @ResponseBody
     public String checkEmailExit(@PathVariable("email") String email) {
-        System.out.println("Controller email: [" + email + "]");
+        log.info("Controller email: [" + email + "]");
 
         boolean exists = Boolean.parseBoolean(service.findEmail(email));
 
