@@ -148,6 +148,36 @@ public class RegisterController {
             registerService.sendEmail(dto.getEmail());
             return "otpLogin";
         }
+    @GetMapping("/resetPassword")
+    public String resetPasswordPage(@RequestParam("token") String token,
+                                    Model model) {
+
+        model.addAttribute("token", token);
+        return "resetPassword";
+    }
+
+    @PostMapping("/resetPassword")
+    public String resetPassword(@RequestParam("token") String token, @RequestParam("password") String password, @RequestParam("confirmPassword") String confirmPassword, Model model) {
+
+        if (!password.equals(confirmPassword)) {
+            model.addAttribute("token", token);
+            model.addAttribute("msg", "Passwords do not match.");
+            return "resetPassword";
+        }
+
+        boolean updated = registerService.resetPassword(token, password);
+
+        if (updated) {
+            model.addAttribute("msg",
+                    "Password reset successfully. Please login.");
+            return "login";
+        }
+
+        model.addAttribute("msg", "Reset link is invalid or expired. Please request a new link.");
+
+        return "forgotPassword";
+    }
+
 }
 
 

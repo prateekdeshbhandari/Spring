@@ -31,6 +31,22 @@ public class RegisterRestController {
 
         return exists ? "false" : "true";
     }
+    @GetMapping("fogetPassword")
+    public String fogetPassword() {
+        return "fogetPassword";
+    }
+
+    @PostMapping("changPassword")
+    @ResponseBody
+    public String changPassword(@RequestParam("email")String email) {
+        log.info("Controller changPassword"+email);
+        boolean sent=service.fogetPassword(email);
+        if(sent){
+            return "true";
+        }
+
+        return "fogetPassword";
+    }
 
 
 }

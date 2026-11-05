@@ -6,11 +6,14 @@ import com.xworkz.Inventar.dto.LoginDto;
 import com.xworkz.Inventar.dto.RegisterDTO;
 import com.xworkz.Inventar.entity.RegisterEntity;
 import com.xworkz.Inventar.refo.RegisterRepository;
+import com.xworkz.Inventar.util.InventarUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
 
 @Component
 @Slf4j
@@ -183,6 +186,64 @@ public class RegisterServiceImpl implements RegisterService {
         }
         return registerDTO;
     }
+
+    @Override
+    public boolean fogetPassword(String email) {
+        RegisterEntity entity = registerRepository.findEntityByEmail(email);
+
+        if (entity == null) {
+            log.warn("Email not found: {}", email);
+            return false;
+        }
+
+        String token = InventarUtil.generateResetToken();
+
+        entity.setResetToken(token);
+        entity.setResetTokenExpiry(LocalDateTime.now().plusMinutes(15));
+       registerRepository.update(entity);
+
+        String resetUrl =
+                "http://localhost:8080/Inventory-management/register/resetPassword?token=" + token;
+
+        String body = "Click the link below to reset your password:\n" + resetUrl
+                + "\nThis link expires in 15 minutes.";
+
+        return emailService.sendEmail(
+                email,
+                "Password Reset",
+                body
+        );
+    }
+
+    @Override
+    public boolean resetPassword(String token, String newPassword) {
+
+        RegisterEntity entity = registerRepository.findEntityByResetToken(token);
+
+        if (entity == null) {
+            return false;
+        }
+
+        // Check token expiry
+        if (entity.getResetTokenExpiry() == null
+                || entity.getResetTokenExpiry().isBefore(LocalDateTime.now())) {
+            return false;
+        }
+
+        // Update password and unblock account
+        entity.setPassword(bcryptPasswordEncoder.encode(newPassword));
+        entity.setAttempts(0);
+        entity.setBlocked(false);
+
+        // Invalidate token so it cannot be reused
+        entity.setResetToken(null);
+        entity.setResetTokenExpiry(null);
+
+       registerRepository.update(entity);
+
+        return true;
+    }
+
 
     @Override
     public RegisterDTO findUserByEmail(String email) {

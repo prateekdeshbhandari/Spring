@@ -139,5 +139,23 @@ public class RegisterRepositoryImpl implements RegisterRepository {
 
         return false;
     }
+
+    @Override
+    public RegisterEntity findEntityByResetToken(String resetToken) {
+
+        EntityManager manager = emf.createEntityManager();
+
+        try {
+            return manager.createQuery("SELECT r FROM RegisterEntity r WHERE r.resetToken = :token", RegisterEntity.class)
+                    .setParameter("token", resetToken)
+                    .getSingleResult();
+
+        } catch (NoResultException e) {
+            return null;
+
+        } finally {
+            manager.close();
+        }
+    }
 }
 
