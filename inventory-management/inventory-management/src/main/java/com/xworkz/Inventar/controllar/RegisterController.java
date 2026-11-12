@@ -7,12 +7,21 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -111,6 +120,28 @@ public class RegisterController {
 
         return "editProfile";
     }
+
+    @PostMapping("/updateImage")
+    public String updateProfileImage(
+            @RequestParam("email") String email,
+            @RequestParam("file") MultipartFile file,
+            Model model) {
+
+        log.info("Update image method is called for: " + email);
+
+        boolean updated = registerService.updateProfileImage(email, file);
+
+        RegisterDTO dto = registerService.findUserByEmail(email);
+        model.addAttribute("registerDto", dto);
+
+        if (updated) {
+            model.addAttribute("successMessage", "Profile image updated successfully");
+        } else {
+            model.addAttribute("msg", "Profile image update failed. Please choose a valid image (max 2 MB).");
+        }
+
+        return "dashboard";
+    }
     @GetMapping("/userLogin")
     public String sendEmail() {
         log.info("Send email method is called");
@@ -148,6 +179,18 @@ public class RegisterController {
             registerService.sendEmail(dto.getEmail());
             return "otpLogin";
         }
+    @GetMapping("/fogetPassword")
+    public String forgotPassword() {
+        return "fogetPassword";
+    }
+
+    @PostMapping("/sendResetLink")
+    @ResponseBody
+    public String sendResetLink(@RequestParam("email") String email) {
+        log.info("sendResetLink controller reached. Email: {}", email);
+        boolean sent = registerService.fogetPassword(email);
+        return sent ? "Reset link sent to your email." : "Unable to send reset link.";
+    }
     @GetMapping("/resetPassword")
     public String resetPasswordPage(@RequestParam("token") String token,
                                     Model model) {
@@ -158,6 +201,12 @@ public class RegisterController {
 
     @PostMapping("/resetPassword")
     public String resetPassword(@RequestParam("token") String token, @RequestParam("password") String password, @RequestParam("confirmPassword") String confirmPassword, Model model) {
+
+        if (password == null || password.trim().length() < 8) {
+            model.addAttribute("token", token);
+            model.addAttribute("msg", "Password must be at least 8 characters.");
+            return "resetPassword";
+        }
 
         if (!password.equals(confirmPassword)) {
             model.addAttribute("token", token);
@@ -170,12 +219,39 @@ public class RegisterController {
         if (updated) {
             model.addAttribute("msg",
                     "Password reset successfully. Please login.");
-            return "login";
+            return "Login";
         }
 
         model.addAttribute("msg", "Reset link is invalid or expired. Please request a new link.");
 
-        return "forgotPassword";
+        return "fogetPassword";
+    }
+
+    @GetMapping("/displayImage")
+    public ResponseEntity<byte[]> displayImage(@RequestParam("imageName") String imageName) {
+
+        Path uploadDir = Paths.get("src/main/webapp/uploads").toAbsolutePath().normalize();
+        Path imagePath = uploadDir.resolve(imageName).normalize();
+
+        if (!imagePath.startsWith(uploadDir) || !Files.exists(imagePath)) {
+            return ResponseEntity.notFound().build();
+        }
+
+        try {
+            byte[] imageBytes = Files.readAllBytes(imagePath);
+            String contentType = Files.probeContentType(imagePath);
+            if (contentType == null) {
+                contentType = MediaType.IMAGE_JPEG_VALUE;
+            }
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_TYPE, contentType)
+                    .body(imageBytes);
+
+        } catch (IOException e) {
+            log.error("Failed to read profile image: {}", imageName, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 }

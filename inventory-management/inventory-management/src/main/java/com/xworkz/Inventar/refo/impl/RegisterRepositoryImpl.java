@@ -88,6 +88,14 @@ public class RegisterRepositoryImpl implements RegisterRepository {
         registerEntity1.setName(registerEntity.getName());
         registerEntity1.setMobileNumber(registerEntity.getMobileNumber());
         registerEntity1.setAddress(registerEntity.getAddress());
+        registerEntity1.setGender(registerEntity.getGender());
+        registerEntity1.setProfileImage(registerEntity.getProfileImage());
+        registerEntity1.setPassword(registerEntity.getPassword());
+        registerEntity1.setOtp(registerEntity.getOtp());
+        registerEntity1.setAttempts(registerEntity.getAttempts());
+        registerEntity1.setBlocked(registerEntity.getBlocked());
+        registerEntity1.setResetToken(registerEntity.getResetToken());
+        registerEntity1.setResetTokenExpiry(registerEntity.getResetTokenExpiry());
 
         entityManager.merge(registerEntity1);
 

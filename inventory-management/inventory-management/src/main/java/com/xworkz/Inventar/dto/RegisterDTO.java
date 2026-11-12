@@ -46,7 +46,7 @@ import javax.validation.constraints.Size;
 
     private String profileImage;
 
-    private boolean blocked;
+    private Boolean blocked;
 
     }
 

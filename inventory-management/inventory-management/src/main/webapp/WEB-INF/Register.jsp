@@ -257,6 +257,7 @@
             <form id="registerForm"
                   action="${pageContext.request.contextPath}/register"
                   method="post"
+                  enctype="multipart/form-data"
                   onsubmit="return validateForm(event)">
 
                 <!-- NAME -->
@@ -395,6 +396,34 @@
                               placeholder="Enter your full address"><c:out value="${registerDTO.address}"/></textarea>
 
                     <div id="addressError" class="error-text"></div>
+
+                </div>
+
+
+                <!-- PROFILE IMAGE -->
+
+                <div class="mb-3">
+
+                    <label for="file" class="form-label">
+                        Profile Image
+                    </label>
+
+                    <input type="file"
+                           class="form-control"
+                           id="file"
+                           name="file"
+                           accept="image/*">
+
+                    <div id="fileError" class="error-text"></div>
+
+                    <img id="imagePreview"
+                         src=""
+                         alt="Preview"
+                         style="display:none;
+                                margin-top:10px;
+                                max-width:120px;
+                                max-height:120px;
+                                border-radius:8px;">
 
                 </div>
 
@@ -634,6 +663,7 @@
         document.getElementById("PhoneError").innerText = "";
         document.getElementById("genderError").innerText = "";
         document.getElementById("addressError").innerText = "";
+        document.getElementById("fileError").innerText = "";
 
 
         // NAME VALIDATION
@@ -730,6 +760,32 @@
         }
 
 
+        // PROFILE IMAGE VALIDATION
+
+        const fileInput = document.getElementById("file");
+        const file = fileInput.files[0];
+
+        if (file) {
+
+            const allowedTypes = ["image/jpeg", "image/png", "image/jpg", "image/gif", "image/webp"];
+
+            if (!allowedTypes.includes(file.type)) {
+
+                document.getElementById("fileError").innerText =
+                    "Only image files are allowed (jpg, png, gif, webp)";
+
+                isValid = false;
+
+            } else if (file.size > 2 * 1024 * 1024) {
+
+                document.getElementById("fileError").innerText =
+                    "Image size must be less than 2 MB";
+
+                isValid = false;
+            }
+        }
+
+
         if (!isValid) {
             return false;
         }
@@ -762,6 +818,47 @@
 
         return false;
     }
+
+
+    // ======================================
+    // IMAGE PREVIEW
+    // ======================================
+
+    document.getElementById("file").addEventListener("change", function () {
+
+        const file = this.files[0];
+        const preview = document.getElementById("imagePreview");
+        const errorDiv = document.getElementById("fileError");
+
+        errorDiv.innerText = "";
+
+        if (file) {
+
+            if (file.type.startsWith("image/")) {
+
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.display = "block";
+                };
+
+                reader.readAsDataURL(file);
+
+            } else {
+
+                preview.style.display = "none";
+                preview.src = "";
+
+                errorDiv.innerText = "Please select a valid image file";
+                errorDiv.style.color = "red";
+            }
+        } else {
+
+            preview.style.display = "none";
+            preview.src = "";
+        }
+    });
 
 </script>
 

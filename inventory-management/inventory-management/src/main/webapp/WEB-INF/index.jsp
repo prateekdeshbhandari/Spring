@@ -21,13 +21,13 @@
         body {
             margin: 0;
             font-family: 'Poppins', Arial, sans-serif;
-            background: #f4f7fb;
+            background: #f8faf9;
             color: #1e293b;
         }
 
         /* Navbar */
         .navbar {
-            background: linear-gradient(110deg, #0f172a, #173b63);
+            background: linear-gradient(110deg, #142d29, #065f46);
             padding: 18px 0;
             box-shadow: 0 4px 18px rgba(15, 23, 42, 0.12);
         }
@@ -40,7 +40,7 @@
         }
 
         .nav-link {
-            color: #e2e8f0 !important;
+            color: #d1fae5 !important;
             margin: 0 10px;
             font-size: 14px;
             font-weight: 500;
@@ -48,11 +48,11 @@
         }
 
         .nav-link:hover {
-            color: #60a5fa !important;
+            color: #6ee7b7 !important;
         }
 
         .navbar .btn-primary {
-            background: #3b82f6;
+            background: #059669;
             border: none;
             border-radius: 8px;
             padding: 10px 23px;
@@ -61,7 +61,7 @@
         }
 
         .navbar .btn-primary:hover {
-            background: #2563eb;
+            background: #047857;
             transform: translateY(-2px);
         }
 
@@ -71,8 +71,8 @@
             overflow: hidden;
             background:
                 radial-gradient(circle at 85% 30%,
-                rgba(96, 165, 250, 0.20), transparent 28%),
-                linear-gradient(135deg, #ffffff 0%, #edf5ff 100%);
+                rgba(16, 185, 129, 0.18), transparent 28%),
+                linear-gradient(135deg, #ffffff 0%, #ecfdf5 100%);
         }
 
         .hero-content {
@@ -82,8 +82,8 @@
         }
 
         .hero .badge {
-            background: #dbeafe !important;
-            color: #1d4ed8 !important;
+            background: #d1fae5 !important;
+            color: #047857 !important;
             padding: 10px 17px !important;
             border-radius: 50px;
             font-size: 11px;
@@ -94,7 +94,7 @@
         .hero h1 {
             font-size: clamp(38px, 5.5vw, 65px);
             font-weight: 800;
-            color: #102a43;
+            color: #142d29;
             line-height: 1.2;
             letter-spacing: -2px;
             margin-top: 15px;
@@ -115,7 +115,7 @@
 
         /* Buttons */
         .btn-primary-custom {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            background: linear-gradient(135deg, #059669, #047857);
             color: white;
             padding: 14px 27px;
             border-radius: 9px;
@@ -124,21 +124,21 @@
             margin: 8px 10px 0 0;
             font-size: 14px;
             font-weight: 600;
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.20);
+            box-shadow: 0 8px 20px rgba(5, 150, 105, 0.20);
             transition: all 0.3s ease;
         }
 
         .btn-primary-custom:hover {
-            background: #1e40af;
+            background: #065f46;
             color: white;
             transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(37, 99, 235, 0.25);
+            box-shadow: 0 12px 25px rgba(5, 150, 105, 0.25);
         }
 
         .btn-outline-custom {
             border: 1px solid #cbd5e1;
             background: white;
-            color: #1e40af;
+            color: #047857;
             padding: 13px 27px;
             border-radius: 9px;
             text-decoration: none;
@@ -150,15 +150,16 @@
         }
 
         .btn-outline-custom:hover {
-            background: #eff6ff;
-            border-color: #3b82f6;
-            color: #1d4ed8;
+            background: #ecfdf5;
+            border-color: #059669;
+            color: #047857;
             transform: translateY(-3px);
         }
 
         /* Features */
         .features {
             padding: 65px 0;
+            background: #f8faf9;
         }
 
         .feature-card {
@@ -167,22 +168,23 @@
             padding: 30px 24px;
             height: 100%;
             box-shadow: 0 8px 30px rgba(15, 40, 70, 0.05);
-            border: 1px solid #e5edf5;
+            border: 1px solid #d1fae5;
             transition: all 0.3s ease;
         }
 
         .feature-card:hover {
             transform: translateY(-6px);
-            box-shadow: 0 15px 35px rgba(15, 40, 70, 0.10);
+            box-shadow: 0 15px 35px rgba(5, 150, 105, 0.10);
         }
 
         .feature-icon {
             font-size: 38px;
             margin-bottom: 18px;
+            color: #059669;
         }
 
         .feature-card h5 {
-            color: #102a43;
+            color: #142d29;
             font-weight: 700;
             margin-bottom: 12px;
         }
@@ -196,8 +198,8 @@
 
         /* Footer */
         footer {
-            background: linear-gradient(110deg, #0f172a, #173b63);
-            color: #cbd5e1;
+            background: linear-gradient(110deg, #142d29, #065f46);
+            color: #d1fae5;
             text-align: center;
             padding: 30px 12px;
         }
@@ -292,7 +294,7 @@
                 <li class="nav-item">
                     <a class="nav-link"
                        href="${pageContext.request.contextPath}/register/userLogin">
-                        User
+                        User Login
                     </a>
                 </li>
 

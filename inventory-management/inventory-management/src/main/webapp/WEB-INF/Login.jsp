@@ -149,7 +149,6 @@
         <button type="submit">Login</button>
 
     </form>
-
     <div class="register-link">
         Don't have an account?
         <a href="${pageContext.request.contextPath}/register">
@@ -157,16 +156,15 @@
         </a>
     </div>
 
-</div>
-<c:if test="${showResetPassword}">
-    <p style="color: red;">
-        Your login failed or your account is blocked.
-    </p>
 
-    <a href="${pageContext.request.contextPath}/register/fogetPassword">
-        Forgot Password / Reset Password
-    </a>
-</c:if>
+        <p style="color: red;">
+
+        </p>
+
+        <a href="${pageContext.request.contextPath}/register/fogetPassword">
+            Forgot Password
+        </a>
+
 
 </div>
 
@@ -223,21 +221,28 @@
 
         request.open( "GET","${pageContext.request.contextPath}/api/inventory/checkLoginEmail/" + encodeURIComponent(email));
 
-        request.onload = function () {
+     request.onload = function () {
 
-            console.log("Response received from backend");
-            console.log(request.responseText);
+    console.log("Response received from backend");
+    console.log(request.responseText);
 
-            let status = request.responseText.trim();
+    let status = request.responseText.trim();
 
-            if (status === "Email Id Already Exist") {
-                document.getElementById("emailStatus").innerText ="Email is registered. You can log in.";
-                document.getElementById("emailStatus").style.color = "green";
-            } else {
-                document.getElementById("emailStatus").innerText =  "Email is not registered. Please register first.";
-                document.getElementById("emailStatus").style.color = "red";
-            }
-        };
+    if (status === "Email Id Already Exist") {
+
+        document.getElementById("emailStatus").innerText =
+            "Email is already registered.";
+
+        document.getElementById("emailStatus").style.color = "red";
+
+    } else {
+
+        document.getElementById("emailStatus").innerText =
+            "Email is available. You can register.";
+
+        document.getElementById("emailStatus").style.color = "green";
+    }
+};
 
         request.send();
 

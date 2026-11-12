@@ -92,7 +92,7 @@
 
 <div class="navbar">
     <h2>Inventory Management</h2>
-    <a href="${pageContext.request.contextPath}/Login.jsp">Logout</a>
+    <a href="${pageContext.request.contextPath}/register/login">Logout</a>
 </div>
 
 <div class="container">
@@ -102,6 +102,39 @@
     <p class="welcome">
         Welcome, <c:out value="${registerDto.name}" />
     </p>
+
+    <div style="text-align:center; margin-bottom:20px;">
+        <c:choose>
+            <c:when test="${not empty registerDto.profileImage}">
+                <img src="${pageContext.request.contextPath}/register/displayImage?imageName=${registerDto.profileImage}"
+                     alt="Profile"
+                     style="max-width:120px; max-height:120px; border-radius:50%; object-fit:cover; border:3px solid #1769e0;">
+            </c:when>
+            <c:otherwise>
+                <div style="width:120px; height:120px; margin:auto; border-radius:50%;
+                            background:#e2e8f0; display:flex; align-items:center; justify-content:center;
+                            font-size:40px; color:#94a3b8;">👤</div>
+            </c:otherwise>
+        </c:choose>
+    </div>
+
+    <c:if test="${not empty successMessage}">
+        <p style="color:green; text-align:center;"><c:out value="${successMessage}"/></p>
+    </c:if>
+    <c:if test="${not empty msg}">
+        <p style="color:red; text-align:center;"><c:out value="${msg}"/></p>
+    </c:if>
+
+    <form action="${pageContext.request.contextPath}/register/updateImage"
+          method="post"
+          enctype="multipart/form-data"
+          style="text-align:center; margin-bottom:20px;">
+
+
+
+
+
+    </form>
 
     <div class="details">
 
@@ -119,12 +152,7 @@
             </div>
         </div>
 
-        <div class="detail-row">
-            <div class="label">Password</div>
-            <div class="value">
-                <c:out value="${registerDto.password}" />
-            </div>
-        </div>
+
 
         <div class="detail-row">
             <div class="label">Phone Number</div>

@@ -7,7 +7,7 @@
         </encoder>
     </appender>
     <appender name="FIlE" class="ch.qos.logback.core.FileAppender">
-        <file>C:\Users\HP\OneDrive\Desktop\inventory\logs\abc.log</file>
+        <file>C:\xworkz btm\Spring\inventory-management\inventory-management\logs\prateek.log</file>
         <append></append>
         <encoder>
             <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n</pattern>

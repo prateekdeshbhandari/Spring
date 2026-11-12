@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page isELIgnored="false" %>
 
 
 <html>
@@ -20,12 +19,14 @@
 
 <p id="message"></p>
 
+<p style="color:red;">${msg}</p>
+
 <script>
     $("#forgotPasswordForm").submit(function (event) {
         event.preventDefault();
 
         $.ajax({
-            url: "<%= request.getContextPath() %>/register/changePassword",
+            url: "<%= request.getContextPath() %>/register/sendResetLink",
             type: "POST",
             data: {
                 email: $("#email").val()
@@ -41,6 +42,7 @@
         });
     });
 </script>
+<a href="${pageContext.request.contextPath}/register/login">Back to Login</a>
 
 </body>
 </html>
